@@ -1,9 +1,10 @@
 import React from "react";
+import { query } from "../../backend/queries";
 
 export default function Login(){
     return(
-        <div>
+        <main>
             teste
-        </div>
+        </main>
     )
 }
