@@ -1,5 +1,5 @@
 # To-Do List DB
-Projeto To-Do compartilhada utilizando o banco de dados MySql.
+Projeto To-Do List compartilhada utilizando o banco de dados MySql.
 --
 <p align="justify">
     Uma lista de tarefas é uma ferramenta poderosa e versátil que oferece uma variedade de funcionalidades para ajudar os usuários a gerenciar suas tarefas de forma eficiente. Dessa forma, você e seus colegas, decidiram utilizar uma lista de tarefas compartilhadas para que, além de cada um poder organizar as suas próprias tarfeas, vocês também pudessem editar listas de tarefas compartilhas entre vocês para se organizarem em relação as atividades em grupo, como tarefas na universidade e estágio.
@@ -39,7 +39,7 @@ Projeto To-Do compartilhada utilizando o banco de dados MySql.
 
 **Tarefa 01.**
 
-    Dada a especificação da aplicação acima, realize a modelagem conceitual, gerando como resultado um Diagrama Entidade Relacionamento (DER).
+Dada a especificação da aplicação acima, realize a modelagem conceitual, gerando como resultado um Diagrama Entidade Relacionamento (DER).
 
 ![Modelo DER](Models/DER_img.png)
 </p>
@@ -48,26 +48,26 @@ Projeto To-Do compartilhada utilizando o banco de dados MySql.
 
 **Tarefa 02.**
 
-    A partir do DER obtido na Tarefa 01, utilize as regras de mapeamento DER/Relacional para construção do modelo lógico relacional.
+A partir do DER obtido na Tarefa 01, utilize as regras de mapeamento DER/Relacional para construção do modelo lógico relacional.
 </p>
 
 <p align="justify">
 
 **Tarefa 03.**
 
-    A partir do modelo lógico relacional obtido na Tarefa 02, escreva um script SQL para construção do esquema do banco de dados. Considere que será utilizado o SGBD MySQL para implantação da aplicação.
+A partir do modelo lógico relacional obtido na Tarefa 02, escreva um script SQL para construção do esquema do banco de dados. Considere que será utilizado o SGBD MySQL para implantação da aplicação.
 </p>
 
 <p align="justify">
 
 **Tarefa 04.**
 
-    Implemente a aplicação especificada acima de forma que ela faça uso do banco de dados construído na Tarefa 03. Pode ser criada uma aplicação de terminal ou uma aplicação com interface gráfica (desktop ou Web). Essa escolha ficará a cargo do grupo de trabalho. A linguagem de programação também deve ser determinada pelo grupo.
+Implemente a aplicação especificada acima de forma que ela faça uso do banco de dados construído na Tarefa 03. Pode ser criada uma aplicação de terminal ou uma aplicação com interface gráfica (desktop ou Web). Essa escolha ficará a cargo do grupo de trabalho. A linguagem de programação também deve ser determinada pelo grupo.
 </p>
 
 <p align="justify">
 
 **Tarefa 05.**
 
-    Escreva um script SQL com todas as consultas utilizadas na implementação da aplicação.
+Escreva um script SQL com todas as consultas utilizadas na implementação da aplicação.
 </p>
