@@ -4,9 +4,10 @@ import { BrowserRouter } from 'react-router-dom'
 
 import Routes from './Routes'
 
-export default props =>
+const app = () =>
     <BrowserRouter>
         <div >
             <Routes />
         </div>
     </BrowserRouter>
+export default app
