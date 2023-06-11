@@ -1,0 +1,23 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+todolistdb/node_modules
+todolistdb/.pnp
+todolistdb/.pnp.js
+
+# testing
+todolistdb/coverage
+
+# production
+todolistdb/build
+
+# misc
+todolistdb/.DS_Store
+todolistdb/.env.local
+todolistdb/.env.development.local
+todolistdb/.env.test.local
+todolistdb/.env.production.local
+
+todolistdb/npm-debug.log*
+todolistdb/yarn-debug.log*
+todolistdb/yarn-error.log*

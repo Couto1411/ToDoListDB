@@ -1,0 +1,6 @@
+componentes bonitos: https://mui.com/
+
+como usar rotas e navigate: https://ultimatecourses.com/blog/programmatically-navigate-react-router
+
+mysql com react: https://betterprogramming.pub/set-up-and-use-mysql-in-create-react-app-environment-22a4c7dc077f
+não vamos utilizar express e a 
