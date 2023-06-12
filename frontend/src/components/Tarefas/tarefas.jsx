@@ -14,11 +14,11 @@ export default function Tarefas() {
         "nome": "Lista 1",
         "tarefa": [
             {
-                "titulo": "titulo 1",
+                "titulo": "TÍTULO 1",
                 "descricao": "werwe"
             },
                 {
-                    "titulo": "titulo 2",
+                    "titulo": "TÍTULO 2",
                     "descricao": "wfsdfsd"
                 },
         ]
@@ -28,15 +28,19 @@ export default function Tarefas() {
         return <div>
             <div>Tarefas</div>
             {Tarefass.tarefa.map(tarefa=>{
-                return <div>{tarefa.titulo}<br/></div>
+                return 
+                <div>
+                    {tarefa.titulo}<br/>
+                    {tarefa.descricao}<br/>
+                </div>
             })}
         </div>
     }
 
     function renderUsu() {
         return <div style={{display: "inline-block"}}>
-            <span style={{marginRight: 120}}>Tarefas</span>
-            <span style={{marginLeft: 120}}>Usuários</span>
+            {/* <span style={{marginRight: 120}}>Tarefas</span>
+            <span style={{marginLeft: 120}}>Usuários</span> */}
         </div>
     }
 
@@ -44,7 +48,8 @@ export default function Tarefas() {
         return <section>
             <Typography align="center" variant="h4">
                 <div>
-
+                    <span style={{textAlign: "left"}}>Tarefas</span>
+                    <span style={{textAlign: "right"}}>Usuários</span>
                     <Button onClick={() => { setUsuTar(!usuTar) }}> Botão</Button>
                     {usuTar ?
                         renderTarefas() :
