@@ -1,15 +1,15 @@
 import React from "react";
 import "./tarefas.css"
+import MenuPage from "../Menu/menupage";
 
 export default function Tarefas(){
     const secao = () =>{
         return <section>
-                notificacoes
-                {sessionStorage.setItem('userid',1)}
+                TAREFAS
             </section>
     }
 
     return(
-        <Menu secao={secao}/>
+        <MenuPage secao={secao}/>
     )
 }

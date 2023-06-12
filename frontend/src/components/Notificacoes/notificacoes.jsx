@@ -1,16 +1,15 @@
 import React from "react";
 import "./notificacoes.css"
-import Menu from "../Menu/menu";
+import MenuPage from "../Menu/menupage";
 
 export default function Notificacoes(){
     const secao = () =>{
         return <section>
-                notificacoes
-                {sessionStorage.setItem('userid',1)}
+                NOTIFICAÇÕES
             </section>
     }
 
     return(
-        <Menu secao={secao}/>
+        <MenuPage secao={secao}/>
     )
 }

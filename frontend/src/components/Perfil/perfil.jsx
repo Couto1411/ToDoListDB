@@ -1,15 +1,15 @@
 import React from "react";
 import "./perfil.css"
+import MenuPage from "../Menu/menupage";
 
 export default function Perfil(){
     const secao = () =>{
         return <section>
-                notificacoes
-                {sessionStorage.setItem('userid',1)}
+                PERFIL
             </section>
     }
 
     return(
-        <Menu secao={secao}/>
+        <MenuPage secao={secao}/>
     )
 }
