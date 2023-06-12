@@ -5,7 +5,7 @@ export default function Login(){
     return(
         <main>
             teste
-            {sessionStorage.setItem('userid')}
+            {sessionStorage.setItem('userid',1)}
         </main>
     )
 }

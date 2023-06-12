@@ -52,7 +52,10 @@ export default function MenuPage({secao: Secao}){
             {/* Navbar */}
             <AppBar position="static">
                 <Toolbar>
-                    <Typography variant="h5" sx={{ flexGrow: 1 }}>To Do List</Typography>
+                    <img className="img-fluid" alt="Imagem não encontrada" src={require('./../Imgs/Logo.png')}></img>
+                    <Typography variant="h4" sx={{ mt:0.5,ml:2,flexGrow: 1 }}>
+                        <div className="TEKO">To Do List</div>
+                    </Typography>
                     <IconButton aria-label="account of current user" aria-controls="menu-appbar" aria-haspopup="true" color="inherit"
                         className="svg_icons"onClick={e=>{setMenuAppearing(e.currentTarget)}}>
                         <AccountCircle />
@@ -100,7 +103,7 @@ export default function MenuPage({secao: Secao}){
             <Box component="footer" sx={{ py: 3, px: 2, mt: 'auto', color: 'white', bgcolor: '#121212'}}>
                 <Container maxWidth="sm">
                     <Typography variant="body1">
-                        Aplicativo de Lista de Tarefas de Banco de Dados 1
+                        Aplicativo de Lista de Tarefas de Banco de Dados 1.
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
                         {'Produzido por: '}
