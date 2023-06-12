@@ -1,5 +1,5 @@
 import React from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import Login from '../components/Login/login';
 import Perfil from '../components/Perfil/perfil';
 import Listas from '../components/Listas/listas';
@@ -15,5 +15,6 @@ export default function Props(){
         <Route path='/tarefas' element={<Tarefas navigate={navigate}/>} exact/>
         <Route path='/perfil' element={<Perfil navigate={navigate}/>} exact/>
         <Route path='/notificacoes' element={<Notificacoes navigate={navigate}/>} exact/>
+        <Route path='*' element={<Navigate to='/login' navigate={navigate}/>} exact/>
     </Routes>
 }

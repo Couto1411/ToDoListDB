@@ -9,13 +9,13 @@ app.use(express.json())
 
 // Teste
 app.get("/get", (req,res)=>{
-    db.query("SELECT * FROM usuario")
-    .then((result)=>{
-        res.json(result)
-    })
-    .catch((erro)=>{
-        res.status(500).send(erroz)
-    })
+    db.query("SELECT * FROM usuario",(err,result)=>{
+        if(err) {
+            res.status(500).send(err)
+        } 
+            res.json(result)
+        }
+    );  
 });
 
 app.listen(8081, () => {
