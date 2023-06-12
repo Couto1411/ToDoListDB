@@ -5,27 +5,20 @@ import MenuPage from "../Menu/menupage";
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
-import { Container } from "@mui/material";
-import * as React from 'react';
-import { styled } from '@mui/material/styles';
-import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
-import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
 import FolderIcon from '@mui/icons-material/Folder';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 
 export default function Tarefas() {
+
+    const [dense] = React.useState(false);
 
     const [Tar, setTar] = React.useState(false);
 
@@ -33,17 +26,14 @@ export default function Tarefas() {
         "nome": "Lista 1",
         "tarefa": [
             {
-                "titulo": "TÍTULO 1",
+                "titulo": "Título 1",
                 "descricao": "werwe"
             },
             {
-                "titulo": "TÍTULO 2",
+                "titulo": "Título 2",
                 "descricao": "wfsdfsd"
             },
-        ]
-    }
-
-    const Usuarioss = {
+        ],
         "usuarios": [
             {
                 "usuario": "Usuário 1"
@@ -54,27 +44,34 @@ export default function Tarefas() {
         ]
     }
 
+
+
     function renderTarefas() {
-        return <div>
-            <div>Tarefas</div>
-            {Tarefass.tarefa.map(tarefa => {
-                return <div>
-                    {tarefa.titulo}<br />
-                    {tarefa.descricao}<br />
-                </div>
-            })}
-        </div>
+        return Tarefass.tarefa.map(tarefa => {
+            return <ListItem
+                secondaryAction={
+                    <IconButton edge="end" aria-label="delete">
+                        <DeleteIcon />
+                    </IconButton>
+                }
+            >
+                <ListItemText>{tarefa.titulo}</ListItemText>
+            </ListItem>
+        })
     }
 
     function renderUsu() {
-        return <div>
-            <div>Usuários</div>
-            {Usuarioss.usuarios.map(tarefa => {
-                return <div>
-                    {tarefa.usuario}<br />
-                </div>
-            })}
-        </div>
+        return Tarefass.usuarios.map(tarefa => {
+            return <ListItem
+                secondaryAction={
+                    <IconButton edge="end" aria-label="delete">
+                        <DeleteIcon />
+                    </IconButton>
+                }
+            >
+                <ListItemText>{tarefa.usuario}</ListItemText>
+            </ListItem>
+        })
     }
 
     const secao = () => {
@@ -85,19 +82,27 @@ export default function Tarefas() {
                     <Typography display="inline">Tarefas</Typography>
                 </Button>
 
-                {Tar &&
-                    renderTarefas()
-                }
 
                 <Button onClick={() => { setTar(false) }} sx={{ flexGrow: 1 }}>
                     <Typography display="inline">Usuários</Typography>
                 </Button>
 
-                {!Tar &&
-                    renderUsu()
-                }
-
             </Box>
+            {Tar &&
+                <Grid item xs={12} md={6}>
+                    {/* <Typography sx={{ mt: 4, mb: 2 }} variant="h6" component="div">
+                        Avatar with text and icon
+                    </Typography> */}
+
+                    <List dense={dense}>
+                        {renderTarefas()}
+                    </List>
+                </Grid>
+            }
+
+            {!Tar &&
+                renderUsu()
+            }
 
             {/* {Tarefas.tarefa} */}
 
