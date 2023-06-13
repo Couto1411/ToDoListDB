@@ -42,7 +42,6 @@ app.post("/signup", (req,res)=> {
 app.post("/login", (req,res)=> {
     try {
         db.query("SELECT * FROM usuario WHERE nome_usuario = ?",[req.body.nome_usuario],(err,result)=>{
-            console.log(result)
             if(err) res.status(500).send(err)
             const token = criaToken({...req.body},result[0].senha,res)
             res.status(200).json({id:result[0].id,token:token})

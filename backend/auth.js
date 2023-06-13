@@ -24,7 +24,6 @@ const validaToken = (req, res, next) => {
 }
 
 const criaToken = (payload, senhaBanco, res) => {
-    console.log(payload,senhaBanco)
     if (senhaBanco!==true && !bcrypt.compareSync(payload.senha, senhaBanco)) res.status(401).send('Senha não bate')
     return jwt.sign( 
         payload, // Body da requisicao (User info)
