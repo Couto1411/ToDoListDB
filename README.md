@@ -35,26 +35,26 @@ Projeto To-Do List compartilhada utilizando o banco de dados MySql.
     Essas funcionalidades essenciais garantem que os usuários tenham controle total sobre suas listas de tarefas e possam colaborar com outras pessoas quando necessário. A aplicação oferecerá uma experiência intuitiva e eficaz para o gerenciamento de tarefas, auxiliando na produtividade e organização pessoal.
 </p>
 
-<p align="justify">
 
 **Tarefa 01.**
 
+<p align="justify">
 Dada a especificação da aplicação acima, realize a modelagem conceitual, gerando como resultado um Diagrama Entidade Relacionamento (DER).
 
 ![Modelo DER](Models/DER_img.png)
 </p>
 
-<p align="justify">
-
 **Tarefa 02.**
 
-A partir do DER obtido na Tarefa 01, utilize as regras de mapeamento DER/Relacional para construção do modelo lógico relacional.
-</p>
-
 <p align="justify">
+A partir do DER obtido na Tarefa 01, utilize as regras de mapeamento DER/Relacional para construção do modelo lógico relacional.
+
+![Modelo DER](Models/Logico_img.png)
+</p>
 
 **Tarefa 03.**
 
+<p align="justify">
 A partir do modelo lógico relacional obtido na Tarefa 02, escreva um script SQL para construção do esquema do banco de dados. Considere que será utilizado o SGBD MySQL para implantação da aplicação.
 </p>
 
