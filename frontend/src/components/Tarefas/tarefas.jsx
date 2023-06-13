@@ -17,13 +17,34 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Pagination from '@mui/material/Pagination';
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
+import Backdrop from '@mui/material/Backdrop';
+import Modal from '@mui/material/Modal';
+import Fade from '@mui/material/Fade';
+
+const style = {
+    color: 'white',
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+};
 
 
 export default function Tarefas() {
 
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+
     const [dense] = React.useState(false);
 
     const [Tar, setTar] = React.useState(true);
+    
 
     const Tarefass = {
         "nome": "Lista 1",
@@ -56,7 +77,31 @@ export default function Tarefas() {
                     </IconButton>
                 }
             >
-                <ListItemText>{tarefa.titulo}</ListItemText>
+                <Button onClick={handleOpen}><ListItemText>{tarefa.titulo}</ListItemText></Button>
+                <Modal
+                aria-labelledby="transition-modal-title"
+                aria-describedby="transition-modal-description"
+                open={open}
+                onClose={handleClose}
+                closeAfterTransition
+                slots={{ backdrop: Backdrop }}
+                slotProps={{
+                    backdrop: {
+                        timeout: 500,
+                    },
+                }}
+            >
+                <Fade in={open}>
+                    <Box sx={style}>
+                        <Typography id="transition-modal-title" variant="h6" component="h2">
+                            {tarefa.titulo}
+                        </Typography>
+                        <Typography id="transition-modal-description" sx={{ mt: 2 }}>
+                            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+                        </Typography>
+                    </Box>
+                </Fade>
+            </Modal>
             </ListItem>
         })
     }
