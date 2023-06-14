@@ -15,8 +15,8 @@ import Grid from '@mui/material/Grid';
 //import FolderIcon from '@mui/icons-material/Folder';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Pagination from '@mui/material/Pagination';
-import Container from '@mui/material/Container';
-import Stack from '@mui/material/Stack';
+//import Container from '@mui/material/Container';
+//import Stack from '@mui/material/Stack';
 import Backdrop from '@mui/material/Backdrop';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
@@ -77,7 +77,7 @@ export default function Tarefas() {
                     </IconButton>
                 }
             >
-                <Button onClick={handleOpen}><ListItemText>{tarefa.titulo}</ListItemText></Button>
+                <Button onClick={handleOpen}><ListItemText className="tarefa">{tarefa.titulo}</ListItemText></Button>
                 <Modal
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
