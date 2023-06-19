@@ -8,16 +8,14 @@ import ButtonBase from '@mui/material/ButtonBase';
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-//import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from '@mui/material/ListItemText';
-//import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
+import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
-//import FolderIcon from '@mui/icons-material/Folder';
 import DeleteIcon from '@mui/icons-material/Delete';
+import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
+import EventAvailableOutlined from '@mui/icons-material/EventAvailableOutlined';
 import Pagination from '@mui/material/Pagination';
-//import Container from '@mui/material/Container';
-//import Stack from '@mui/material/Stack';
 import Backdrop from '@mui/material/Backdrop';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
@@ -28,7 +26,6 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 400,
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
@@ -39,13 +36,13 @@ const style = {
 export default function Tarefas() {
 
     const [open, setOpen] = React.useState(false);
-    function handleOpen (temp) {setOpen(temp)};
+    function handleOpen(temp) { setOpen(temp) };
     const handleClose = () => setOpen(false);
 
     const [dense] = React.useState(false);
 
     const [Tar, setTar] = React.useState(true);
-    
+
 
     const Tarefass = {
         "lista": "Lista 1",
@@ -58,21 +55,25 @@ export default function Tarefas() {
                 "concluida": true
             },
             {
-                "titulo": "Tarefa 2"
+                "titulo": "Tarefa 2",
+                "dataCadastro": "15/06/2023",
+                "dataVencimento": "30/09/2023",
+                "descricao": "Duis mollis, est non commodo luctus, nisi erat porttitor ligula.",
+                "concluida": true
             },
         ],
         "usuarios": [
             {
-                "usuario": "Usuário Compartilhado 1"
+                "usuario": "Convidado 1"
             },
             {
-                "usuario": "Usuário Compartilhado 2 "
+                "usuario": "Convidado 2 "
             },
         ]
     }
 
 
-    
+
     function renderTarefas() {
         return Tarefass.tarefa.map(tarefa => {
             return <ListItem
@@ -82,8 +83,8 @@ export default function Tarefas() {
                     </IconButton>
                 }
             >
-                <ButtonBase onClick={()=>handleOpen(tarefa)}><ListItemText className="tarefa">{tarefa.titulo}</ListItemText></ButtonBase>
-                
+                <ButtonBase onClick={() => handleOpen(tarefa)}><ListItemText className="tarefa">{tarefa.titulo}</ListItemText></ButtonBase>
+
             </ListItem>
         })
     }
@@ -125,19 +126,19 @@ export default function Tarefas() {
                 </Button>
 
                 <Button onClick={() => { setTar(false) }} sx={{ flexGrow: 1 }}>
-                    <Typography display="inline">Usuários</Typography>
+                    <Typography display="inline">Convidados</Typography>
                 </Button>
 
             </Box>
-            {Tar &&
-                <Grid>
-                    <List dense={dense}>
-                        {renderTarefas()}
-                    </List>
-                </Grid>
-            }
-
-            {!Tar && renderUsu()}
+            <Grid>
+                <List dense={dense}>
+                    {Tar ?
+                        renderTarefas()
+                        :
+                        renderUsu()
+                    }
+                </List>
+            </Grid>
 
             <Pagination count={10} className="pagination" />
 
@@ -155,16 +156,49 @@ export default function Tarefas() {
                 }}
             >
                 <Fade in={open}>
-                    <Box sx={style}>
+                    <Box sx={style} className="modal">
                         <Typography id="transition-modal-title" variant="h6" component="h2">
                             {open.titulo}
                         </Typography>
                         <Typography className="deOndeVem">
                             na {Tarefass.lista}
                         </Typography>
-                        <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-                            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+                        <br />
+                        <Typography display="flex">
+                            <Box sx={{ flexGrow: 1 }} align="center" display="flex">
+                                <CalendarMonthOutlinedIcon />
+                                <Typography>
+                                    &nbsp;&nbsp;{open.dataCadastro}
+                                </Typography>
+                            </Box>
+                            <Box sx={{ flexGrow: 6 }} display="flex">
+                                <EventAvailableOutlined />
+                                <Typography>
+                                    &nbsp;&nbsp;{open.dataVencimento}
+                                </Typography>
+                            </Box>
+                            <Box sx={{ flexGrow: 6 }} display="flex">
+                                <Typography>
+                                    Concluída 
+                                </Typography>
+                            </Box>
                         </Typography>
+                        <Typography id="transition-modal-description" sx={{ mt: 2 }}>
+                            <TextField
+                                id="standard-multiline-flexible"
+                                label="Descrição"
+                                multiline
+                                maxRows={10}
+                                variant="standard"
+                                fullWidth
+                                value={open.descricao}
+                                minRows={
+                                    4
+                                }
+                            />
+                        </Typography>
+                        <br />
+                        <Button variant="contained">Salvar</Button>
                     </Box>
                 </Fade>
             </Modal>
