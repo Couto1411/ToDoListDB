@@ -2,7 +2,6 @@ import React from "react";
 import "./login.css"
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
@@ -18,7 +17,6 @@ import Modal from '@mui/material/Modal';
 
 export default function Login() {
     const [open, setOpen] = React.useState(false);
-
     function handleSubmit(event) {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
@@ -34,7 +32,7 @@ export default function Login() {
                 sx={{
                     marginTop: 8,
                     display: 'flex',
-                    p:5,
+                    p: 5,
                     flexDirection: 'column',
                     alignItems: 'center',
                     bgcolor: "black",
@@ -46,7 +44,7 @@ export default function Login() {
                     <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                    Sign in
+                    Login
                 </Typography>
                 <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                     <TextField
@@ -54,7 +52,7 @@ export default function Login() {
                         required
                         fullWidth
                         id="email"
-                        label="Email Address"
+                        label="Email"
                         name="email"
                         autoComplete="email"
                         autoFocus
@@ -64,14 +62,10 @@ export default function Login() {
                         required
                         fullWidth
                         name="password"
-                        label="Password"
+                        label="Senha"
                         type="password"
                         id="password"
                         autoComplete="current-password"
-                    />
-                    <FormControlLabel
-                        control={<Checkbox value="remember" color="primary" />}
-                        label="Remember me"
                     />
                     <Button
                         type="submit"
@@ -79,19 +73,13 @@ export default function Login() {
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}
                     >
-                        Sign In
+                        Login
                     </Button>
-                    <Grid container>
-                        <Grid item xs>
-                            <Link href="#" variant="body2">
-                                Forgot password?
-                            </Link>
-                        </Grid>
+                    <Grid container justifyContent="flex-end">
                         <Grid item>
                             <Link href="#" variant="body2" onClick={() => setOpen(true)}>
-                                {"Sign Up"}
+                                {"Cadastrar"}
                             </Link>
-
                         </Grid>
                     </Grid>
                 </Box>
@@ -109,38 +97,57 @@ export default function Login() {
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'center',
-                            bgcolor: "black", 
-                            color: 'white',
+                            color: "white",
+                            bgcolor: "black",
                             p: 5,
-                            borderRadius:2.3,
+                            borderRadius: 2.3,
                         }}
                     >
                         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
                             <LockOutlinedIcon />
                         </Avatar>
                         <Typography component="h1" variant="h5">
-                            Sign up
+                            Cadastrar
                         </Typography>
                         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
                             <Grid container spacing={2}>
-                                <Grid item xs={12} sm={6}>
+                                <Grid item xs={12}>
                                     <TextField
                                         autoComplete="given-name"
                                         name="firstName"
                                         required
                                         fullWidth
                                         id="firstName"
-                                        label="First Name"
+                                        label="Nome Completo"
+                                        autoFocus
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        required
+                                        fullWidth
+                                        id="user_name"
+                                        label="User Name"
+                                        name="Nome usuario"
+                                        autoComplete="family-name"
+                                    />
+                                </Grid>
+                                <Grid item xs={12} sm={6}>
+                                    <TextField
+                                        autoComplete="given-name"
+                                        name="Telefone 1"
+                                        fullWidth
+                                        id="Telefone_1"
+                                        label="Telefone 1"
                                         autoFocus
                                     />
                                 </Grid>
                                 <Grid item xs={12} sm={6}>
                                     <TextField
-                                        required
                                         fullWidth
-                                        id="lastName"
-                                        label="Last Name"
-                                        name="lastName"
+                                        id="Telefone_2"
+                                        label="Telefone 2"
+                                        name="Telefone 2"
                                         autoComplete="family-name"
                                     />
                                 </Grid>
@@ -149,7 +156,7 @@ export default function Login() {
                                         required
                                         fullWidth
                                         id="email"
-                                        label="Email Address"
+                                        label="Email"
                                         name="email"
                                         autoComplete="email"
                                     />
@@ -159,16 +166,21 @@ export default function Login() {
                                         required
                                         fullWidth
                                         name="password"
-                                        label="Password"
+                                        label="Senha"
                                         type="password"
                                         id="password"
                                         autoComplete="new-password"
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
-                                    <FormControlLabel
-                                        control={<Checkbox value="allowExtraEmails" color="primary" />}
-                                        label="I want to receive inspiration, marketing promotions and updates via email."
+                                    <TextField
+                                        required
+                                        fullWidth
+                                        name="password"
+                                        label="Confirmar Senha"
+                                        type="password"
+                                        id="password"
+                                        autoComplete="new-password"
                                     />
                                 </Grid>
                             </Grid>
@@ -178,12 +190,12 @@ export default function Login() {
                                 variant="contained"
                                 sx={{ mt: 3, mb: 2 }}
                             >
-                                Sign Up
+                                Cadastrar
                             </Button>
                             <Grid container justifyContent="flex-end">
                                 <Grid item>
-                                    <Link href="#" variant="body2">
-                                        Sign in
+                                    <Link href="#" variant="body2" onClick={() => setOpen(false)}>
+                                        {"Login"}
                                     </Link>
                                 </Grid>
                             </Grid>
