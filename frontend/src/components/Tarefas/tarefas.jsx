@@ -4,6 +4,7 @@ import MenuPage from "../Menu/menupage";
 
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import ButtonBase from '@mui/material/ButtonBase';
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -38,7 +39,7 @@ const style = {
 export default function Tarefas() {
 
     const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
+    function handleOpen (temp) {setOpen(temp)};
     const handleClose = () => setOpen(false);
 
     const [dense] = React.useState(false);
@@ -47,10 +48,14 @@ export default function Tarefas() {
     
 
     const Tarefass = {
-        "nome": "Lista 1",
+        "lista": "Lista 1",
         "tarefa": [
             {
-                "titulo": "Tarefa 1"
+                "titulo": "Tarefa 1",
+                "dataCadastro": "07/05/2003",
+                "dataVencimento": "01/06/2023",
+                "descricao": "Duis mollis, est non commodo luctus, nisi erat porttitor ligula.",
+                "concluida": true
             },
             {
                 "titulo": "Tarefa 2"
@@ -67,7 +72,7 @@ export default function Tarefas() {
     }
 
 
-
+    
     function renderTarefas() {
         return Tarefass.tarefa.map(tarefa => {
             return <ListItem
@@ -77,31 +82,8 @@ export default function Tarefas() {
                     </IconButton>
                 }
             >
-                <Button onClick={handleOpen}><ListItemText className="tarefa">{tarefa.titulo}</ListItemText></Button>
-                <Modal
-                aria-labelledby="transition-modal-title"
-                aria-describedby="transition-modal-description"
-                open={open}
-                onClose={handleClose}
-                closeAfterTransition
-                slots={{ backdrop: Backdrop }}
-                slotProps={{
-                    backdrop: {
-                        timeout: 500,
-                    },
-                }}
-            >
-                <Fade in={open}>
-                    <Box sx={style}>
-                        <Typography id="transition-modal-title" variant="h6" component="h2">
-                            {tarefa.titulo}
-                        </Typography>
-                        <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-                            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-                        </Typography>
-                    </Box>
-                </Fade>
-            </Modal>
+                <ButtonBase onClick={()=>handleOpen(tarefa)}><ListItemText className="tarefa">{tarefa.titulo}</ListItemText></ButtonBase>
+                
             </ListItem>
         })
     }
@@ -121,11 +103,11 @@ export default function Tarefas() {
     }
 
     function titulo() {
-        return <Box variant="3" align>
-            <Box edge="end" align="center" className="TEKOtarefa">
-                {Tarefass.nome}
+        return <Box variant="3" align display="flex">
+            <Box edge="end" align="center" className="TEKOtarefa" sx={{ flexGrow: 1 }}>
+                {Tarefass.lista}
             </Box>
-            <IconButton edge="end" aria-label="delete">
+            <IconButton edge="end" aria-label="delete" sx={{ flexGrow: 0 }}>
                 <DeleteIcon sx={{ color: "red" }} />
             </IconButton>
         </Box>
@@ -158,6 +140,34 @@ export default function Tarefas() {
             {!Tar && renderUsu()}
 
             <Pagination count={10} className="pagination" />
+
+            <Modal
+                aria-labelledby="transition-modal-title"
+                aria-describedby="transition-modal-description"
+                open={open}
+                onClose={handleClose}
+                closeAfterTransition
+                slots={{ backdrop: Backdrop }}
+                slotProps={{
+                    backdrop: {
+                        timeout: 500,
+                    },
+                }}
+            >
+                <Fade in={open}>
+                    <Box sx={style}>
+                        <Typography id="transition-modal-title" variant="h6" component="h2">
+                            {open.titulo}
+                        </Typography>
+                        <Typography className="deOndeVem">
+                            na {Tarefass.lista}
+                        </Typography>
+                        <Typography id="transition-modal-description" sx={{ mt: 2 }}>
+                            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+                        </Typography>
+                    </Box>
+                </Fade>
+            </Modal>
 
         </section>
     }
