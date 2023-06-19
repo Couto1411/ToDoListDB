@@ -18,10 +18,9 @@ import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import PersonIcon from '@mui/icons-material/Person';
 
-import Axios from 'axios'
-import baseUrl from "../../main/backend";
 
 import { useNavigate } from "react-router-dom";
+import { Login, SignUp } from "../Consultas";
 
 export default function MenuPage({secao: Secao}){
     // Faz Menu aparecer
@@ -37,14 +36,12 @@ export default function MenuPage({secao: Secao}){
     }
 
     async function CarregaTeste(){
-        await Axios.get(baseUrl+'get')
-        .then((response)=>{
-            console.log(response)
-        })
-        .catch((error)=>{
-            console.log(error)
-        })
-    
+        const payload = {
+            nome_usuario: "Couto",
+            nome: "gabriel",
+            senha: "tchubiraum"
+        }
+        Login(payload);
     }
 
     return(
