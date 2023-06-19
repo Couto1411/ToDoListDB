@@ -15,6 +15,8 @@ import Grid from '@mui/material/Grid';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
 import EventAvailableOutlined from '@mui/icons-material/EventAvailableOutlined';
+import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
+
 import Pagination from '@mui/material/Pagination';
 import Backdrop from '@mui/material/Backdrop';
 import Modal from '@mui/material/Modal';
@@ -164,25 +166,26 @@ export default function Tarefas() {
                             na {Tarefass.lista}
                         </Typography>
                         <br />
-                        <Typography display="flex">
-                            <Box sx={{ flexGrow: 1 }} align="center" display="flex">
+                        <Box display="flex">
+                            <Box sx={{ flexGrow: 1 }} display="flex">
                                 <CalendarMonthOutlinedIcon />
-                                <Typography>
-                                    &nbsp;&nbsp;{open.dataCadastro}
+                                <Typography sx={{pl:1}}>
+                                    {open.dataCadastro}
                                 </Typography>
                             </Box>
-                            <Box sx={{ flexGrow: 6 }} display="flex">
+                            <Box sx={{ flexGrow: 3 }} display="flex">
                                 <EventAvailableOutlined />
-                                <Typography>
-                                    &nbsp;&nbsp;{open.dataVencimento}
+                                <Typography sx={{pl:1}}>
+                                    {open.dataVencimento}
                                 </Typography>
                             </Box>
-                            <Box sx={{ flexGrow: 6 }} display="flex">
-                                <Typography>
+                            <Box sx={{ flexGrow: 8 }} display="flex">
+                                <Typography sx={{pr: 1}}>
                                     Concluída 
                                 </Typography>
+                                <CheckCircleOutlineOutlinedIcon sx={{color: "green"}}/>
                             </Box>
-                        </Typography>
+                        </Box>
                         <Typography id="transition-modal-description" sx={{ mt: 2 }}>
                             <TextField
                                 id="standard-multiline-flexible"
@@ -192,9 +195,7 @@ export default function Tarefas() {
                                 variant="standard"
                                 fullWidth
                                 value={open.descricao}
-                                minRows={
-                                    4
-                                }
+                                minRows={4}
                             />
                         </Typography>
                         <br />
