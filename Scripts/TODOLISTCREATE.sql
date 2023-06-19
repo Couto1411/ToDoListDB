@@ -4,7 +4,7 @@ CREATE DATABASE `todolist`;
 USE `todolist`;
 
 CREATE TABLE Usuario (
-    usuario_id INT PRIMARY KEY,
+    usuario_id INT PRIMARY KEY AUTO_INCREMENT,
     nome_usuario varchar(40),
     nome varchar(100) NOT NULL,
     email varchar(100) NOT NULL
@@ -14,7 +14,7 @@ CREATE TABLE Usuario (
 );
 
 CREATE TABLE Lista (
-    lista_id INT PRIMARY KEY,
+    lista_id INT PRIMARY KEY AUTO_INCREMENT,
     nome varchar(100) NOT NULL,
     data_hora_crt DateTime,
     data_hora_mod DateTime,
@@ -25,7 +25,7 @@ CREATE TABLE Lista (
 );
 
 CREATE TABLE Tarefa (
-    tarefa_id INT PRIMARY KEY,
+    tarefa_id INT PRIMARY KEY AUTO_INCREMENT,
     descricao varchar(256),
     data_cadastro DateTime,
     data_vencimento DateTime,
