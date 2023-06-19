@@ -20,7 +20,7 @@ import PersonIcon from '@mui/icons-material/Person';
 
 
 import { useNavigate } from "react-router-dom";
-import { Login, SignUp } from "../Consultas";
+import { Login } from "../Consultas";
 
 export default function MenuPage({secao: Secao}){
     // Faz Menu aparecer
@@ -89,7 +89,7 @@ export default function MenuPage({secao: Secao}){
             </AppBar>
 
             {/* Main */}
-            <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
+            <Container component="main" maxWidth="md" sx={{ mb: 4 }}>
                 <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
                     <Secao/>
                     {/* <Button onClick={()=>{CarregaTeste()}}> Butão</Button> */}
