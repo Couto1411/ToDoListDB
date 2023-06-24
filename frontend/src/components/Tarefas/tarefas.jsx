@@ -1,7 +1,6 @@
 import React from "react";
 import "./tarefas.css"
 import MenuPage from "../Menu/menupage";
-
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import ButtonBase from '@mui/material/ButtonBase';
@@ -16,7 +15,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
 import EventAvailableOutlined from '@mui/icons-material/EventAvailableOutlined';
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
-
 import Pagination from '@mui/material/Pagination';
 import Backdrop from '@mui/material/Backdrop';
 import Modal from '@mui/material/Modal';
@@ -38,8 +36,11 @@ const style = {
 export default function Tarefas() {
 
     const [open, setOpen] = React.useState(false);
+    const [open2, setOpen2] = React.useState(false);
     function handleOpen(temp) { setOpen(temp) };
+    const handleOpen2 = () => {setOpen2(true);};
     const handleClose = () => setOpen(false);
+    const handleClose2 = () => setOpen2(false);
 
     const [dense] = React.useState(false);
 
@@ -88,7 +89,8 @@ export default function Tarefas() {
                 <ButtonBase onClick={() => handleOpen(tarefa)}><ListItemText className="tarefa">{tarefa.titulo}</ListItemText></ButtonBase>
 
             </ListItem>
-        })
+        }
+        )
     }
 
     function renderUsu() {
@@ -118,6 +120,7 @@ export default function Tarefas() {
     }
 
     const secao = () => {
+
         return <section>
 
             {titulo()}
@@ -126,7 +129,7 @@ export default function Tarefas() {
                 <Button onClick={() => { setTar(true) }} sx={{ flexGrow: 1 }}>
                     <Typography display="inline">Tarefas</Typography>
                 </Button>
-
+                <Typography display="inline" sx={{ flexGrow: 1 }}>|</Typography>
                 <Button onClick={() => { setTar(false) }} sx={{ flexGrow: 1 }}>
                     <Typography display="inline">Convidados</Typography>
                 </Button>
@@ -134,6 +137,7 @@ export default function Tarefas() {
             </Box>
             <Grid>
                 <List dense={dense}>
+
                     {Tar ?
                         renderTarefas()
                         :
@@ -141,6 +145,12 @@ export default function Tarefas() {
                     }
                 </List>
             </Grid>
+
+            <Box textAlign={"center"}>
+                <Button variant="contained" color="success" align="center" onClick={handleOpen2}>
+                    Nova Tarefa
+                </Button>
+            </Box>
 
             <Pagination count={10} className="pagination" />
 
@@ -169,21 +179,18 @@ export default function Tarefas() {
                         <Box display="flex">
                             <Box sx={{ flexGrow: 1 }} display="flex">
                                 <CalendarMonthOutlinedIcon />
-                                <Typography sx={{pl:1}}>
+                                <Typography sx={{ pl: 1 }}>
                                     {open.dataCadastro}
                                 </Typography>
                             </Box>
                             <Box sx={{ flexGrow: 3 }} display="flex">
                                 <EventAvailableOutlined />
-                                <Typography sx={{pl:1}}>
+                                <Typography sx={{ pl: 1 }}>
                                     {open.dataVencimento}
                                 </Typography>
                             </Box>
                             <Box sx={{ flexGrow: 8 }} display="flex">
-                                <Typography sx={{pr: 1}}>
-                                    Concluída 
-                                </Typography>
-                                <CheckCircleOutlineOutlinedIcon sx={{color: "green"}}/>
+
                             </Box>
                         </Box>
                         <Typography id="transition-modal-description" sx={{ mt: 2 }}>
@@ -199,9 +206,33 @@ export default function Tarefas() {
                             />
                         </Typography>
                         <br />
-                        <Button variant="contained">Salvar</Button>
+                        <Button variant="contained" onClick={handleClose2}>Salvar</Button>
                     </Box>
                 </Fade>
+
+            </Modal>
+
+                {/* MODAL NOVA TAREFA */}
+
+            <Modal
+                aria-labelledby="transition-modal-title"
+                aria-describedby="transition-modal-description"
+                open={open2}
+                onClose={handleClose2}
+                closeAfterTransition
+                slots={{ backdrop: Backdrop }}
+                slotProps={{
+                    backdrop: {
+                        timeout: 500,
+                    },
+                }}
+            >
+                <Fade in={open2}>
+                    <Box sx={style} className="modal">
+
+                    </Box>
+                </Fade>
+
             </Modal>
 
         </section>
