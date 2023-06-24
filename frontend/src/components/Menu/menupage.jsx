@@ -28,7 +28,7 @@ export default function MenuPage({secao: Secao}){
     function vaiPara (localizacao){
         setMenuAppearing(null)
         if(localizacao==='login'){
-            // remove storage
+            sessionStorage.removeItem('token')
         }
         navigate('/'+localizacao)
     }
