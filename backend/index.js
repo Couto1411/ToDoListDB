@@ -41,10 +41,13 @@ app.post("/signup", (req,res)=> {
 // Login
 app.post("/login", (req,res)=> {
     try {
-        db.query("SELECT * FROM usuario WHERE nome_usuario = ?",[req.body.nome_usuario],(err,result)=>{
+        db.query("SELECT * FROM usuario WHERE email = ?",[req.body.email],(err,result)=>{
             if(err) res.status(500).send(err)
-            const token = criaToken({...req.body},result[0].senha,res)
-            res.status(200).json({id:result[0].id,token:token})
+            if(!result[0]) res.status(404).send("Não encontrado")
+            else{
+                const token = criaToken({...req.body},result[0].senha,res)
+                res.status(200).json({id:result[0].id,token:token})
+            }
         });
     } catch (error) {
         //console.log(error);

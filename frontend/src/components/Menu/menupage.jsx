@@ -11,7 +11,6 @@ import Menu from '@mui/material/Menu';
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
-import Button from '@mui/material/Button';
 
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
@@ -20,7 +19,6 @@ import PersonIcon from '@mui/icons-material/Person';
 
 
 import { useNavigate } from "react-router-dom";
-import { Login, SignUp } from "../Consultas";
 
 export default function MenuPage({secao: Secao}){
     // Faz Menu aparecer
@@ -33,15 +31,6 @@ export default function MenuPage({secao: Secao}){
             // remove storage
         }
         navigate('/'+localizacao)
-    }
-
-    async function CarregaTeste(){
-        const payload = {
-            nome_usuario: "Couto",
-            nome: "gabriel",
-            senha: "tchubiraum"
-        }
-        Login(payload);
     }
 
     return(
@@ -89,10 +78,9 @@ export default function MenuPage({secao: Secao}){
             </AppBar>
 
             {/* Main */}
-            <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
+            <Container component="main" maxWidth="md" sx={{ mb: 4 }}>
                 <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
                     <Secao/>
-                    <Button onClick={()=>{CarregaTeste()}}> Butão</Button>
                 </Paper>
             </Container >
 
