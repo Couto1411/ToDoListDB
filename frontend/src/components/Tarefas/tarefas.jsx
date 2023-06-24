@@ -14,11 +14,15 @@ import Grid from '@mui/material/Grid';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
 import EventAvailableOutlined from '@mui/icons-material/EventAvailableOutlined';
-import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
 import Pagination from '@mui/material/Pagination';
 import Backdrop from '@mui/material/Backdrop';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
+import dayjs, { Dayjs } from 'dayjs';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DateField } from '@mui/x-date-pickers/DateField';
 
 const style = {
     color: 'white',
@@ -38,7 +42,7 @@ export default function Tarefas() {
     const [open, setOpen] = React.useState(false);
     const [open2, setOpen2] = React.useState(false);
     function handleOpen(temp) { setOpen(temp) };
-    const handleOpen2 = () => {setOpen2(true);};
+    const handleOpen2 = () => { setOpen2(true); };
     const handleClose = () => setOpen(false);
     const handleClose2 = () => setOpen2(false);
 
@@ -139,20 +143,26 @@ export default function Tarefas() {
                 <List dense={dense}>
 
                     {Tar ?
-                        renderTarefas()
+
+                        <div>
+                            {renderTarefas()}
+                            <Box textAlign={"center"}>
+                                <Button variant="contained" color="success" align="center" onClick={handleOpen2}>
+                                    Nova Tarefa
+                                </Button>
+                            </Box>
+                        </div>
                         :
                         renderUsu()
                     }
                 </List>
             </Grid>
 
-            <Box textAlign={"center"}>
-                <Button variant="contained" color="success" align="center" onClick={handleOpen2}>
-                    Nova Tarefa
-                </Button>
-            </Box>
+
 
             <Pagination count={10} className="pagination" />
+
+            {/* MODAL TAREFA X */}
 
             <Modal
                 aria-labelledby="transition-modal-title"
@@ -212,7 +222,7 @@ export default function Tarefas() {
 
             </Modal>
 
-                {/* MODAL NOVA TAREFA */}
+            {/* MODAL NOVA TAREFA */}
 
             <Modal
                 aria-labelledby="transition-modal-title"
@@ -229,7 +239,17 @@ export default function Tarefas() {
             >
                 <Fade in={open2}>
                     <Box sx={style} className="modal">
-
+                        <Box>
+                            <TextField id="outlined-basic" label="Nome da Tarefa" variant="outlined" />
+                        </Box>
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <DemoContainer components={['DateField', 'DateField']}>
+                                <DateField label="Uncontrolled field" />
+                                <DateField
+                                    label="Controlled field"
+                                />
+                            </DemoContainer>
+                        </LocalizationProvider>
                     </Box>
                 </Fade>
 
