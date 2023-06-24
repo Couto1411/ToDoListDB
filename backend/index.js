@@ -19,6 +19,7 @@ app.get("/get", (req,res)=>{
     );  
 });
 
+// Cadastro
 app.post("/signup", (req,res)=> {
     try {
         let valores =[]
@@ -51,6 +52,38 @@ app.post("/login", (req,res)=> {
         });
     } catch (error) {
         //console.log(error);
+        return res.status(500).json({ message: error });
+    }
+})
+
+// Faz lista
+app.post("/lista/:userId",validaToken,(req,res)=>{
+    try{
+        db.query(`Select * from usuario where usuario_id = ${req.params.userId}`,(err,result)=>{
+            if(err){
+                console.log(err)
+                res.status(500).send(err)
+            }
+            console.log(result)
+            res.status(200).send(result)
+        })
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: error });
+    }
+})
+
+app.post("/lista/:listaId/tarefa",validaToken,(req,res)=>{
+    try {
+        db.query(`INSERT INTO tarefa (descricao,data_cadastro,data_vencimento,concluida,titulo,lista_id,usuario_id) VALUES(${req.body.descricao},${req.body.data_cadastro},?,?,?,?)`,(err,result)=>{
+            if(err){
+                console.log(err)
+                res.status(500).send(err)
+            }
+            res.status(200).json({email:result.email,})
+        })
+    } catch (error) {
+        console.log(error);
         return res.status(500).json({ message: error });
     }
 })

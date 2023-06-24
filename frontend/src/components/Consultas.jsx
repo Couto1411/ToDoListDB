@@ -38,3 +38,19 @@ export async function Login(props,payload,setEmail,setSenha){
         console.log(error)
     })
 }
+
+export async function CriaTarefa(props,listaId,payload,setTarefas){
+    await Axios.post(baseUrl+'/lista/'+listaId+'/tarefa',{
+        "descricao": (null || payload.descricao)??"",
+
+    },{
+        headers: {
+            'Authorization': 'bearer ' + sessionStorage.getItem("token")
+        }
+    })
+    .then(response=>{setTarefas(response.data)})
+    .catch((error)=>{
+        if (error?.response?.status===401) props.navigate('/login')
+        console.log(error)
+    })
+}
