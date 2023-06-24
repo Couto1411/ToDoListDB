@@ -14,11 +14,12 @@ import Grid from '@mui/material/Grid';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
 import EventAvailableOutlined from '@mui/icons-material/EventAvailableOutlined';
+import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
+import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import Pagination from '@mui/material/Pagination';
 import Backdrop from '@mui/material/Backdrop';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
-import dayjs, { Dayjs } from 'dayjs';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -45,6 +46,8 @@ export default function Tarefas() {
     const handleOpen2 = () => { setOpen2(true); };
     const handleClose = () => setOpen(false);
     const handleClose2 = () => setOpen2(false);
+
+    const [clicked, setClicked] = React.useState();
 
     const [dense] = React.useState(false);
 
@@ -200,6 +203,13 @@ export default function Tarefas() {
                                 </Typography>
                             </Box>
                             <Box sx={{ flexGrow: 8 }} display="flex">
+                                <Typography sx={{ pr: 1 }}>
+                                    Concluída
+                                </Typography>
+
+                                <IconButton onClick={() => setClicked(true)} sx={{ padding: 0 }}>
+                                    {clicked ? <CheckCircleOutlineOutlinedIcon sx={{ color: "green" }} /> : <CloseOutlinedIcon sx={{ color: "red" }} /> }
+                                </IconButton>
 
                             </Box>
                         </Box>
@@ -212,11 +222,11 @@ export default function Tarefas() {
                                 variant="standard"
                                 fullWidth
                                 value={open.descricao}
-                                minRows={4}
+                                minRows={3}
                             />
                         </Typography>
                         <br />
-                        <Button variant="contained" onClick={handleClose2}>Salvar</Button>
+                        <Button variant="contained" onClick={handleClose}>Salvar</Button>
                     </Box>
                 </Fade>
 
@@ -239,17 +249,35 @@ export default function Tarefas() {
             >
                 <Fade in={open2}>
                     <Box sx={style} className="modal">
+                        <Typography id="transition-modal-title" variant="h6" component="h2">
+                            Nova Tarefa
+                        </Typography>
+                        <br />
                         <Box>
                             <TextField id="outlined-basic" label="Nome da Tarefa" variant="outlined" />
                         </Box>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DemoContainer components={['DateField', 'DateField']}>
-                                <DateField label="Uncontrolled field" />
+                                <DateField label="Início Tarefa" />
                                 <DateField
-                                    label="Controlled field"
+                                    label="Fim Tarefa"
                                 />
                             </DemoContainer>
                         </LocalizationProvider>
+                        <Typography id="transition-modal-description" sx={{ mt: 2 }}>
+                            <TextField
+                                id="standard-multiline-flexible"
+                                label="Descrição"
+                                multiline
+                                maxRows={10}
+                                variant="standard"
+                                fullWidth
+                                value={open.descricao}
+                                minRows={3}
+                            />
+                        </Typography>
+                        <br />
+                        <Button variant="contained" onClick={handleClose2}>Salvar</Button>
                     </Box>
                 </Fade>
 
