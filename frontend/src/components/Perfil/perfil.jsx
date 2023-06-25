@@ -17,7 +17,7 @@ const Profile = {
 export default function Perfil() {
     const secao = () => {
         return <section>
-            <Box
+            <Grid
                 sx={{
                     display: 'flex',
                     p: 5,
@@ -59,7 +59,7 @@ export default function Perfil() {
                         </Grid>
                     </Grid>
                 </Box>
-            </Box>
+            </Grid>
             <Button
                 type="submit"
                 fullWidth
@@ -93,6 +93,6 @@ export default function Perfil() {
     }
 
     return (
-        <MenuPage secao={secao} />
+        <MenuPage secao={secao} tamanho="lg" />
     )
 }
