@@ -23,22 +23,12 @@ export default function Perfil() {
                         flexDirection: 'column',
                         alignItems: 'center',
                     }}>
-                    <img
-                    src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
-                    alt="avatar"
-                    style={{ width: 150 }}
-                    />
-                    <h5>John Smith</h5>
-                    <p>Full Stack Developer</p>
-                    <p>Bay Area, San Francisco, CA</p>
-                    <div>
-                    <button type="button">
-                        Follow
-                    </button>
-                    <button type="button">
-                        Message
-                    </button>
-                    </div>
+                    <Avatar sx={{ m: 2, bgcolor: 'primary.main', width: 200, height: 200}}>
+                        <AccountCircleIcon sx={{ fontSize: 200 }} />
+                    </Avatar>
+                    <h5>Marcus</h5>
+                    <p>marcus@cefet.com</p>
+                    <p>CEFET-MG Campus V</p>
                 </Grid>
                 <Grid item xs={12} md={8}
                     sx={{
@@ -47,9 +37,7 @@ export default function Perfil() {
                         flexDirection: 'column',
                         alignItems: 'center',
                     }}>
-                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                        <AccountCircleIcon />
-                    </Avatar>
+                    
 
                     <Box sx={{ mt: 3 }}>
                         <Grid container spacing={2}>
@@ -83,14 +71,15 @@ export default function Perfil() {
                     </Box>
                 </Grid>
             </Grid>
-            <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 1, mb: 2 }}
-            >
-                Salvar Dados
-            </Button>
+            <Grid container justifyContent="end">
+                <Button 
+                    type="submit"
+                    variant="contained"
+                    sx={{mb: 2, width: "63%" }}
+                >
+                    Salvar Dados
+                </Button>
+            </Grid>
 
 
         </section>
