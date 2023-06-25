@@ -145,3 +145,19 @@ export async function Convidar(props,id,setConvidados,setSeeNovoConvite){
         console.log(error)
     })
 }
+
+export async function GetTarefas(props,setTarefas){
+    await Axios.get(baseUrl+'user/'+sessionStorage.getItem('userId')+'/lista/'+sessionStorage.getItem('listaId')+'/tarefas',{
+        headers: {
+            'Authorization': sessionStorage.getItem("token")
+        }
+    })
+    .then(response=>{
+        if(response.data.token) sessionStorage.setItem('token',response.data.token)
+        setTarefas(response.data.resposta)
+    })
+    .catch((error)=>{
+        if (error?.response?.status===401) props.navigate('/login')
+        console.log(error)
+    })
+}

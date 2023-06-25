@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./tarefas.css"
 import {
     Container,Box,Typography,
     IconButton,Button,ButtonBase,
     List,ListItem,ListItemText,
-    TextField,Pagination,Modal,Fade, FormControl, InputLabel, Input, InputAdornment, ListItemButton, FormHelperText
+    TextField,Pagination,Modal,Fade, FormControl, InputLabel, Input, InputAdornment, ListItemButton, FormHelperText, Divider
 } from "@mui/material";
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -21,7 +21,7 @@ import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 
 import MenuPage from "../Menu/menupage";
 import { limit } from "../utils";
-import { Convidar, ProcuraUsuarios } from "../Consultas";
+import { Convidar, GetTarefas, ProcuraUsuarios } from "../Consultas";
 
 const style = {
     color: 'white',
@@ -40,70 +40,44 @@ export default function Tarefas(props) {
     const [seeNovaTarefa, setSeeNovaTarefa] = React.useState(false);
     const [seeNovoConvite, setSeeNovoConvite] = React.useState(false);
     const [value, setValue] = React.useState(true);
-
-    const [Tar, setTar] = React.useState(true);
-    const [Tarefass,setTarefass] = React.useState({
-        "lista": "Lista 1",
-        "tarefa": [
-            {
-                "titulo": "Tarefa 1",
-                "dataCadastro": "07/05/2003",
-                "dataVencimento": "01/06/2023",
-                "descricao": "Duis mollis, est non commodo luctus, nisi erat porttitor ligula.",
-                "concluida": true,
-                "id": 1,
-                "usuarioId" : 1
-            },
-            {
-                "titulo": "Tarefa 2",
-                "dataCadastro": "15/06/2023",
-                "dataVencimento": "30/09/2023",
-                "descricao": "Duis mollis, est non commodo luctus, nisi erat porttitor ligula.",
-                "concluida": true,
-                "id": 2,
-                "usuarioId" : 2
-            },
-        ],
-        "usuarios": [
-            {
-                "usuario": "Convidado 1",
-                "id": 1
-            },
-            {
-                "usuario": "Convidado 2 ",
-                "id": 2
-            },
-        ]
-    });
     const [convidados,setConvidados] = React.useState([])
     const [usuAConvidar,setUsuAConvidar] = React.useState()
 
+    const [Tar, setTar] = React.useState(true);
+    const [dados,setDados] = React.useState({lista:{},tarefas:[],usuarios:[]});
+
+    useEffect(() => {
+        GetTarefas(props,setDados);
+    },[]);
     function renderTarefas() {
-        return Tarefass.tarefa.map(tarefa => {
-            return <ListItem key={'tarefa' + tarefa.id}
+        let count=0;
+        return dados.tarefas.map(tarefa => {
+            count++;
+            return <div key={'tarefa' + tarefa.tarefa_id}>{count>1?<Divider component="li" />:<></>}<ListItem
                 secondaryAction={
                     <IconButton edge="end" aria-label="delete">
                         <DeleteIcon />
                     </IconButton>
-                }
-            >
+                }>
                 <ButtonBase onClick={() => setOpen(tarefa)}><ListItemText className="tarefa">{tarefa.titulo}</ListItemText></ButtonBase>
-
-            </ListItem>
+                
+            </ListItem></div>
         }
         )
     }
 
     function renderUsu() {
-        return Tarefass.usuarios.map(tarefa => {
-            return <ListItem key={'usuario' + tarefa.id}
+        let count=0;
+        return dados.usuarios.map(tarefa => {
+            count++;
+            return <div key={'usuario' + tarefa.id}>{count>1?<Divider sx={{ bgcolor: "primary.light" }} component="li" />:<></>}<ListItem 
                 secondaryAction={
                     <IconButton edge="end" aria-label="delete">
                         <DeleteIcon />
                     </IconButton>
                 }>
                 <ListItemText>{tarefa.usuario}</ListItemText>
-            </ListItem>
+            </ListItem></div>
         })
     }
 
@@ -111,7 +85,7 @@ export default function Tarefas(props) {
         return convidados.map(convidado => {
             return <ListItem key={'convidado' + convidado.id}>
                 <ListItemButton selected={usuAConvidar === convidado.id} onClick={e=>{setUsuAConvidar(convidado.id)}}>
-                    <ListItemText id={"convidadotext"+convidado.id}>{convidado.nome}</ListItemText>
+                    <Typography id={"convidadotext"+convidado.id}>{convidado.nome}</Typography>
                 </ListItemButton>
             </ListItem>
         })
@@ -123,7 +97,7 @@ export default function Tarefas(props) {
 
             <Box variant="3" display="flex">
                 <Box edge="end" align="center" className="TEKOtarefa" sx={{ flexGrow: 1 }}>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{Tarefass.lista}
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{dados.lista.nome}
                 </Box>
                 
                 <IconButton onClick={()=>{setSeeNovoConvite(true)}}>
@@ -136,29 +110,24 @@ export default function Tarefas(props) {
             </Box>
 
             <Box align="center" display="flex">
-                <Button onClick={() => { setTar(true) }} sx={{ flexGrow: 1 }}>
+                <Button variant="text" onClick={() => { setTar(true) }} sx={{ flexGrow: 1 }}>
                     <Typography display="inline">Tarefas</Typography>
                 </Button>
-                <Typography display="inline" sx={{ flexGrow: 1 }}>|</Typography>
-                <Button onClick={() => { setTar(false) }} sx={{ flexGrow: 1 }}>
+                <Typography color="primary" display="inline" sx={{ flexGrow: 1 }}>|</Typography>
+                <Button variant="text" onClick={() => { setTar(false) }} sx={{ flexGrow: 1 }}>
                     <Typography display="inline">Convidados</Typography>
                 </Button>
             </Box>
 
             <List>
-                {Tar ?
-                    <div>
-                        {renderTarefas()}
-                        <Box textAlign={"center"}>
-                            <Button variant="contained" color="success" align="center" onClick={() => {setSeeNovaTarefa(true);}}>
-                                Nova Tarefa
-                            </Button>
-                        </Box>
-                    </div>
-                    :
-                    renderUsu()
-                }
+                {Tar ? renderTarefas() : renderUsu() }
             </List>
+            { Tar && <Box sx={{m:2}} textAlign={"start"}>
+                <Button variant="outlined"  align="center" onClick={() => {setSeeNovaTarefa(true);}}>
+                    Nova Tarefa
+                </Button>
+            </Box>}
+            
 
             <Pagination count={10} className="pagination" />
 
@@ -177,14 +146,14 @@ export default function Tarefas(props) {
                             {open.titulo}
                         </Typography>
                         <Typography className="deOndeVem">
-                            na {Tarefass.lista}
+                            na {dados.lista.nome}
                         </Typography>
                         <br/>
                         <Box display="flex">
                             <Box sx={{ flexGrow: 1 }} display="flex">
                                 <CalendarMonthOutlinedIcon />
                                 <Typography sx={{ pl: 1 }}>
-                                    {open.dataCadastro}
+                                    {open.data_cadastro}
                                 </Typography>
                             </Box>
                             <Box sx={{ flexGrow: 3 }} display="flex">
@@ -192,7 +161,7 @@ export default function Tarefas(props) {
                                     <EventAvailableOutlined />
                                 </IconButton>
                                 <Typography sx={{ pl: 1 }}>
-                                    {open.dataVencimento}
+                                    {open.data_vencimento}
                                 </Typography>
                             </Box>
                             <Box sx={{ flexGrow: 8 }} display="flex">
@@ -274,7 +243,6 @@ export default function Tarefas(props) {
                     </Box>
                 </Fade>
             </Modal>
-            <Button onClick={e=>{sessionStorage.setItem('listaId',1)}}>TESTE</Button>
         </div>
     )
 }

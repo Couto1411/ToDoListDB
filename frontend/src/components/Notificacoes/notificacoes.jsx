@@ -1,7 +1,7 @@
 import React, {  useEffect, useState } from "react";
 import "./notificacoes.css"
 import MenuPage from "../Menu/menupage";
-import { Box, Grid, IconButton, Paper, Typography } from "@mui/material";
+import { Box, Button, Grid, IconButton, Paper, Typography } from "@mui/material";
 
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import CheckIcon from '@mui/icons-material/Check';
@@ -66,6 +66,7 @@ export default function Notificacoes(props){
                 <Box align="center" >
                     {renderizaConvites()}
                 </Box>
+                <Button onClick={e=>{sessionStorage.setItem('listaId',1)}}>TESTE</Button>
             </section>
     }
 
