@@ -11,7 +11,8 @@ export async function SignUp(props,payload){
         "email":(null || payload.email)??""
     })
     .then((response)=>{
-        if(response.data.token)sessionStorage.setItem('token',response.data.token)
+        sessionStorage.setItem('token','bearer '+response.data.token)
+        sessionStorage.setItem('userId',response.data.id)
         props.navigate('/listas')
     })
     .catch((error)=>{
@@ -29,7 +30,8 @@ export async function Login(props,payload,setEmail,setSenha){
         "email":(null || payload.email)??""
     })
     .then((response)=>{
-        if(response.data.token)sessionStorage.setItem('token',response.data.token)
+        sessionStorage.setItem('token','bearer '+response.data.token)
+        sessionStorage.setItem('userId',response.data.id)
         props.navigate('/listas')
     })
     .catch((error)=>{
@@ -45,10 +47,41 @@ export async function CriaTarefa(props,listaId,payload,setTarefas){
 
     },{
         headers: {
-            'Authorization': 'bearer ' + sessionStorage.getItem("token")
+            'Authorization': sessionStorage.getItem("token")
         }
     })
     .then(response=>{setTarefas(response.data)})
+    .catch((error)=>{
+        if (error?.response?.status===401) props.navigate('/login')
+        console.log(error)
+    })
+}
+
+export async function CriaConvite(props,listaId,usuarioId){
+    await Axios.post(baseUrl+'novoconvite',{
+        "lista_id": listaId,
+        "usuario_id": usuarioId
+    },{
+        headers: {
+            'Authorization': sessionStorage.getItem("token")
+        }
+    })
+    .catch((error)=>{
+        if (error?.response?.status===401) props.navigate('/login')
+        console.log(error)
+    })
+}
+
+export async function GetConvites(props,setConvites){
+    await Axios.get(baseUrl+'convites/'+sessionStorage.getItem('userId'),{
+        headers: {
+            'Authorization': sessionStorage.getItem("token")
+        }
+    })
+    .then(response=>{
+        if(response.data.token) sessionStorage.setItem('token',response.data.token)
+        setConvites(response.data.resposta)
+    })
     .catch((error)=>{
         if (error?.response?.status===401) props.navigate('/login')
         console.log(error)

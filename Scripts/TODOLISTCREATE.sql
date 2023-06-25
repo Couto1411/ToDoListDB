@@ -39,7 +39,9 @@ CREATE TABLE Tarefa (
 CREATE TABLE Convidado (
     usuario_id INT,
     lista_id INT,
+    estado_convite INT,
     Constraint PRIMARY KEY (usuario_id, lista_id),
+    Constraint unico_convite UNIQUE KEY (lista_id,usuario_id),
     Constraint fk_usuario_convidado_id foreign key (usuario_id) references Usuario (usuario_id),
     Constraint fk_lista_convidado_id foreign key (lista_id) references Lista (lista_id)
 );
