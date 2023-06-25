@@ -66,7 +66,6 @@ export default function Notificacoes(props){
                 <Box align="center" >
                     {renderizaConvites()}
                 </Box>
-                <Button onClick={e=>{sessionStorage.setItem('listaId',1)}}>TESTE</Button>
             </section>
     }
 
