@@ -122,3 +122,19 @@ export async function RejeitaConvite(props,lista_id){
         console.log(error)
     })
 }
+
+export async function GetListas(props,setListas) {
+    await Axios.get(baseUrl+'listas/'+sessionStorage.getItem('userId'),{
+        headers: {
+            'Authorization': sessionStorage.getItem("token")
+        }
+    })
+    .then(response => {
+        if(response.data.token) sessionStorage.setItem('token',response.data.token)
+        setListas(response.data.resposta)
+    })
+    .catch((error) => {
+        if (error?.response?.status===401) props.navigate('/login')
+        console.log(error)
+    })
+}
