@@ -119,12 +119,11 @@ export default function LoginComponent(props) {
                 </Box>
             </Box>
             <Modal
+                className="modalcadastro"
                 open={open}
-                onClose={() => setOpen(false)}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description">
+                onClose={() => setOpen(false)}>
                 <Fade in={open}>
-                    <Container component="main" maxWidth="md" sx={{
+                    <Container maxWidth="md" sx={{
                         marginTop: 8, p: 5, borderRadius: 2.3,
                         display: 'flex', flexDirection: 'column', alignItems: 'center',
                         color: "white", bgcolor: "black",}}>
