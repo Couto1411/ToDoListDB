@@ -1,0 +1,9 @@
+.modalcadastro::-webkit-scrollbar {
+    display: none;
+}
+  
+.modalcadastro{
+    overflow: scroll;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
