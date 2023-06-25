@@ -2,8 +2,9 @@ const express = require("express"); //import express
 const cors = require('cors');
 const {validaToken,criaToken, encryptPassword} = require('./auth')
 const db = require('./db');
-const { getConvites, postConvite, aceitaConvite, rejeitaConvite } = require("./api/notificacao");
-const { getUsuarios, getTarefas } = require("./api/tarefa");
+const { getConvites, postConvite, aceitaConvite, rejeitaConvite, deleteConvite } = require("./api/notificacao");
+const { getUsuarios, getTarefas, postTarefa, updateTarefa, deletaTarefa } = require("./api/tarefa");
+const { deleteLista } = require("./api/lista");
 
 const app = express()
 
@@ -50,8 +51,13 @@ app.post("/login", (req,res)=> {
     }
 })
 
+// Deleta lista
+app.delete("/user/:userId/lista/:listaId",validaToken,deleteLista)
+
 // Faz convite
 app.post("/novoconvite",validaToken,postConvite)
+// Desfaz convites
+app.delete("/user/:userId/desconvidar/:listaId/user/:conviteId",validaToken,deleteConvite)
 // Busca convites
 app.get("/convites/:userId",validaToken,getConvites)
 // Aceita convites
@@ -60,9 +66,15 @@ app.put("/convites/aceita",validaToken,aceitaConvite)
 app.delete("/convites/rejeita/:userId/:listaId",validaToken,rejeitaConvite)
 
 // Busca usuarios
-app.get("/usuarios",validaToken,getUsuarios)
+app.get("/user/:userId/lista/:listaId/usuarios",validaToken,getUsuarios)
 // Busca tarefas
 app.get("/user/:userId/lista/:listaId/tarefas",validaToken,getTarefas)
+// Cria tarefas
+app.post("/user/:userId/lista/:listaId/tarefas",validaToken,postTarefa)
+// Edita tarefas
+app.put("/user/:userId/lista/:listaId/tarefas",validaToken,updateTarefa)
+// Deleta tarefas
+app.delete("/user/:userId/lista/:listaId/tarefas/:tarefaId",validaToken,deletaTarefa)
 
 
 app.listen(8081, () => {

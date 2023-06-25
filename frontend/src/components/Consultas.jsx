@@ -41,22 +41,6 @@ export async function Login(props,payload,setEmail,setSenha){
     })
 }
 
-export async function CriaTarefa(props,listaId,payload,setTarefas){
-    await Axios.post(baseUrl+'/lista/'+listaId+'/tarefa',{
-        "descricao": (null || payload.descricao)??"",
-
-    },{
-        headers: {
-            'Authorization': sessionStorage.getItem("token")
-        }
-    })
-    .then(response=>{setTarefas(response.data)})
-    .catch((error)=>{
-        if (error?.response?.status===401) props.navigate('/login')
-        console.log(error)
-    })
-}
-
 export async function GetConvites(props,setConvites){
     await Axios.get(baseUrl+'convites/'+sessionStorage.getItem('userId'),{
         headers: {
@@ -109,7 +93,7 @@ export async function RejeitaConvite(props,lista_id){
 }
 
 export async function ProcuraUsuarios(props,nome,setUsuarios){
-    await Axios.get(baseUrl+'usuarios?nome='+nome,{
+    await Axios.get(baseUrl+'user/'+sessionStorage.getItem('userId')+'/lista/'+sessionStorage.getItem('listaId')+'/usuarios?nome='+nome,{
         headers: {
             'Authorization': sessionStorage.getItem("token")
         }
@@ -134,7 +118,6 @@ export async function Convidar(props,id,setConvidados,setSeeNovoConvite){
         }
     })
     .then(response=>{
-        console.log(response)
         if(response.data.token) sessionStorage.setItem('token',response.data.token)
         setConvidados([])
         setSeeNovoConvite(false)
@@ -142,6 +125,22 @@ export async function Convidar(props,id,setConvidados,setSeeNovoConvite){
     .catch((error)=>{
         if (error?.response?.status===401) props.navigate('/login')
         if (error?.response?.status===403) document.getElementById('helptext').style.display='block'
+        console.log(error)
+    })
+}
+
+export async function Desconvidar(props,id){
+    await Axios.delete(baseUrl+'user/'+sessionStorage.getItem('userId')+'/desconvidar/'+sessionStorage.getItem('listaId')+'/user/'+id,{
+        headers: {
+            'Authorization': sessionStorage.getItem("token")
+        }
+    })
+    .then(response=>{
+        if(response.data.token) sessionStorage.setItem('token',response.data.token)
+    })
+    .catch((error)=>{
+        if (error?.response?.status===401) props.navigate('/login')
+        else if (error?.response?.status===403) props.navigate('/listas')
         console.log(error)
     })
 }
@@ -155,6 +154,65 @@ export async function GetTarefas(props,setTarefas){
     .then(response=>{
         if(response.data.token) sessionStorage.setItem('token',response.data.token)
         setTarefas(response.data.resposta)
+    })
+    .catch((error)=>{
+        if (error?.response?.status===401) props.navigate('/login')
+        else if (error?.response?.status===403) props.navigate('/listas')
+        console.log(error)
+    })
+}
+
+export async function CriaTarefa(props,payload){
+    await Axios.post(baseUrl+'user/'+sessionStorage.getItem('userId')+'/lista/'+sessionStorage.getItem('listaId')+'/tarefas',payload,{
+        headers: {
+            'Authorization': sessionStorage.getItem("token")
+        }
+    })
+    .then(response=>{return true})
+    .catch((error)=>{
+        if (error?.response?.status===401) props.navigate('/login')
+        else if (error?.response?.status===403) props.navigate('/listas')
+        console.log(error)
+    })
+}
+
+export async function EditaTarefa(props,payload){
+    await Axios.put(baseUrl+'user/'+sessionStorage.getItem('userId')+'/lista/'+sessionStorage.getItem('listaId')+'/tarefas',payload,{
+        headers: {
+            'Authorization': sessionStorage.getItem("token")
+        }
+    })
+    .then(response=>{return true})
+    .catch((error)=>{
+        if (error?.response?.status===401) props.navigate('/login')
+        else if (error?.response?.status===403) props.navigate('/listas')
+        console.log(error)
+    })
+}
+
+export async function DeletaTarefa(props,id){
+    await Axios.delete(baseUrl+'user/'+sessionStorage.getItem('userId')+'/lista/'+sessionStorage.getItem('listaId')+'/tarefas/'+id,{
+        headers: {
+            'Authorization': sessionStorage.getItem("token")
+        }
+    })
+    .then(response=>{return true})
+    .catch((error)=>{
+        if (error?.response?.status===401) props.navigate('/login')
+        else if (error?.response?.status===403) props.navigate('/listas')
+        console.log(error)
+    })
+}
+
+export async function DeletaLista(props){
+    await Axios.delete(baseUrl+'user/'+sessionStorage.getItem('userId')+'/lista/'+sessionStorage.getItem('listaId'),{
+        headers: {
+            'Authorization': sessionStorage.getItem("token")
+        }
+    })
+    .then(response=>{
+        sessionStorage.removeItem("listaId")
+        props.navigate('/listas')
     })
     .catch((error)=>{
         if (error?.response?.status===401) props.navigate('/login')
