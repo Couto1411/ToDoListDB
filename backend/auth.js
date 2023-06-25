@@ -10,11 +10,11 @@ const validaToken = (req, res, next) => {
 
     try {
         const payload = jwt.verify(token, Token_Key);
-        if (!payload.email)  return res.send(401).json({ message: 'Token Invalido' });
+        if (!payload.id)  return res.send(401).send('Token Invalido');
         let tempoAtual = Math.floor(Date.now() / 1000);
-        if (payload.exp - tempoAtual > 300){ // Renova o token se faltar menos de 5 minutos para expirar
-            const novoToken = jwt.sign({id:payload.email}, Token_Key, { expiresIn: '1h' });
-            req.headers.authorization = novoToken;
+        if (payload.exp - tempoAtual < 300){ // Renova o token se faltar menos de 5 minutos para expirar
+            const novoToken = jwt.sign({id:payload.id}, Token_Key, { expiresIn: 3600 });
+            req.headers.authorization = 'bearer'+ novoToken;
         }
         next()
     }catch (error) {
@@ -25,11 +25,13 @@ const validaToken = (req, res, next) => {
 
 const criaToken = (payload, senhaBanco, res) => {
     if (senhaBanco!==true && !bcrypt.compareSync(payload.senha, senhaBanco)) res.status(401).send('Senha não bate')
-    return jwt.sign( 
-        {id:payload.email}, // Body da requisicao (User info)
-        Token_Key, // Chave Secreta
-        { expiresIn: 3600 } // Tempo de token
-    );
+    else{
+        return jwt.sign( 
+            {id:payload.email}, // Body da requisicao (User info)
+            Token_Key, // Chave Secreta
+            { expiresIn: 3600 } // Tempo de token
+        );
+    }
 }
 
 const encryptPassword = password => {

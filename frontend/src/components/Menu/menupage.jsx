@@ -79,7 +79,7 @@ export default function MenuPage({secao: Secao}){
 
             {/* Main */}
             <Container component="main" maxWidth="md" sx={{ mb: 4 }}>
-                <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
+                <Paper variant="outlined" sx={{ bgcolor: '#282828',my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
                     <Secao/>
                 </Paper>
             </Container >
