@@ -20,7 +20,7 @@ import PersonIcon from '@mui/icons-material/Person';
 
 import { useNavigate } from "react-router-dom";
 
-export default function MenuPage({secao: Secao, tamanho: tamanho}){
+export default function MenuPage({secao: Secao, tamanho}){
     // Faz Menu aparecer
     const [menuAppearing, setMenuAppearing] = React.useState(null);
     const navigate = useNavigate();
