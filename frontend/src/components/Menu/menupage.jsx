@@ -81,10 +81,6 @@ export default function MenuPage({secao: Secao}){
             <Container component="main" maxWidth="md" sx={{ mb: 4 }}>
                 <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
                     <Secao/>
-<<<<<<< HEAD
-                    {/* <Button onClick={()=>{CarregaTeste()}}> Butão</Button> */}
-=======
->>>>>>> origin/main
                 </Paper>
             </Container >
 

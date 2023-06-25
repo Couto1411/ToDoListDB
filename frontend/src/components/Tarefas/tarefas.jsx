@@ -16,14 +16,16 @@ import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined
 import EventAvailableOutlined from '@mui/icons-material/EventAvailableOutlined';
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
+import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 import Pagination from '@mui/material/Pagination';
-import Backdrop from '@mui/material/Backdrop';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DateField } from '@mui/x-date-pickers/DateField';
+import { DatePicker } from "@mui/x-date-pickers";
+import { limit } from "../utils";
+import { Container, Icon } from "@mui/material";
 
 const style = {
     color: 'white',
@@ -37,7 +39,6 @@ const style = {
     p: 4,
 };
 
-
 export default function Tarefas() {
 
     const [open, setOpen] = React.useState(false);
@@ -45,16 +46,8 @@ export default function Tarefas() {
     function handleOpen(temp) { setOpen(temp) };
     const handleOpen2 = () => { setOpen2(true); };
     const handleClose = () => setOpen(false);
-    const handleClose2 = () => setOpen2(false);
-
-    const [clicked, setClicked] = React.useState();
-
-    const [dense] = React.useState(false);
-
-    const [Tar, setTar] = React.useState(true);
-
-
-    const Tarefass = {
+    const [value, setValue] = React.useState(true);
+    const [Tarefass] = React.useState({
         "lista": "Lista 1",
         "tarefa": [
             {
@@ -62,31 +55,39 @@ export default function Tarefas() {
                 "dataCadastro": "07/05/2003",
                 "dataVencimento": "01/06/2023",
                 "descricao": "Duis mollis, est non commodo luctus, nisi erat porttitor ligula.",
-                "concluida": true
+                "concluida": true,
+                "id": 1,
+                "usuarioId" : 1
             },
             {
                 "titulo": "Tarefa 2",
                 "dataCadastro": "15/06/2023",
                 "dataVencimento": "30/09/2023",
                 "descricao": "Duis mollis, est non commodo luctus, nisi erat porttitor ligula.",
-                "concluida": true
+                "concluida": true,
+                "id": 2,
+                "usuarioId" : 2
             },
         ],
         "usuarios": [
             {
-                "usuario": "Convidado 1"
+                "usuario": "Convidado 1",
+                "id": 1
             },
             {
-                "usuario": "Convidado 2 "
+                "usuario": "Convidado 2 ",
+                "id": 2
             },
         ]
-    }
+    });
 
+    const [dense] = React.useState(false);
 
+    const [Tar, setTar] = React.useState(true);
 
     function renderTarefas() {
         return Tarefass.tarefa.map(tarefa => {
-            return <ListItem
+            return <ListItem key={'tarefa' + tarefa.id}
                 secondaryAction={
                     <IconButton edge="end" aria-label="delete">
                         <DeleteIcon />
@@ -102,7 +103,7 @@ export default function Tarefas() {
 
     function renderUsu() {
         return Tarefass.usuarios.map(tarefa => {
-            return <ListItem
+            return <ListItem key={'usuario' + tarefa.id}
                 secondaryAction={
                     <IconButton edge="end" aria-label="delete">
                         <DeleteIcon />
@@ -115,10 +116,15 @@ export default function Tarefas() {
     }
 
     function titulo() {
-        return <Box variant="3" align display="flex">
+        return <Box variant="3" display="flex">
             <Box edge="end" align="center" className="TEKOtarefa" sx={{ flexGrow: 1 }}>
-                {Tarefass.lista}
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{Tarefass.lista}
             </Box>
+
+            <IconButton>
+                <PersonAddAlt1Icon sx={{ color: "#94d0f8" }} />
+            </IconButton>
+
             <IconButton edge="end" aria-label="delete" sx={{ flexGrow: 0 }}>
                 <DeleteIcon sx={{ color: "red" }} />
             </IconButton>
@@ -128,7 +134,7 @@ export default function Tarefas() {
 
     const secao = () => {
 
-        return <section>
+        return <Container>
 
             {titulo()}
 
@@ -162,25 +168,21 @@ export default function Tarefas() {
             </Grid>
 
 
-
             <Pagination count={10} className="pagination" />
 
+        </Container>
+    }
+
+    return (
+        <div>
+            <MenuPage secao={secao} />
             {/* MODAL TAREFA X */}
 
             <Modal
-                aria-labelledby="transition-modal-title"
-                aria-describedby="transition-modal-description"
-                open={open}
+                open={Boolean(open)}
                 onClose={handleClose}
-                closeAfterTransition
-                slots={{ backdrop: Backdrop }}
-                slotProps={{
-                    backdrop: {
-                        timeout: 500,
-                    },
-                }}
             >
-                <Fade in={open}>
+                <Fade in={Boolean(open)}>
                     <Box sx={style} className="modal">
                         <Typography id="transition-modal-title" variant="h6" component="h2">
                             {open.titulo}
@@ -197,7 +199,9 @@ export default function Tarefas() {
                                 </Typography>
                             </Box>
                             <Box sx={{ flexGrow: 3 }} display="flex">
-                                <EventAvailableOutlined />
+                                <IconButton sx={{padding: 0}}>
+                                    <EventAvailableOutlined />
+                                </IconButton>
                                 <Typography sx={{ pl: 1 }}>
                                     {open.dataVencimento}
                                 </Typography>
@@ -207,14 +211,13 @@ export default function Tarefas() {
                                     Concluída
                                 </Typography>
 
-                                <IconButton onClick={() => setClicked(true)} sx={{ padding: 0 }}>
-                                    {clicked ? <CheckCircleOutlineOutlinedIcon sx={{ color: "green" }} /> : <CloseOutlinedIcon sx={{ color: "red" }} /> }
+                                <IconButton onClick={() => setOpen({ ...open, concluida: !open.concluida })} sx={{ padding: 0 }}>
+                                    {open.concluida ? <CheckCircleOutlineOutlinedIcon sx={{ color: "green" }} /> : <CloseOutlinedIcon sx={{ color: "red" }} />}
                                 </IconButton>
 
                             </Box>
                         </Box>
-                        <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-                            <TextField
+                            <TextField  sx={{ mt: 2 }}
                                 id="standard-multiline-flexible"
                                 label="Descrição"
                                 multiline
@@ -224,9 +227,8 @@ export default function Tarefas() {
                                 value={open.descricao}
                                 minRows={3}
                             />
-                        </Typography>
                         <br />
-                        <Button variant="contained" onClick={handleClose}>Salvar</Button>
+                        <Button sx={{ mt: 2 }} variant="contained" onClick={handleClose}>Salvar</Button>
                     </Box>
                 </Fade>
 
@@ -238,34 +240,31 @@ export default function Tarefas() {
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
                 open={open2}
-                onClose={handleClose2}
-                closeAfterTransition
-                slots={{ backdrop: Backdrop }}
-                slotProps={{
-                    backdrop: {
-                        timeout: 500,
-                    },
-                }}
+                onClose={() => setOpen2(false)}
             >
                 <Fade in={open2}>
-                    <Box sx={style} className="modal">
+                    <Box component="form" sx={style} className="modal">
                         <Typography id="transition-modal-title" variant="h6" component="h2">
                             Nova Tarefa
                         </Typography>
                         <br />
                         <Box>
-                            <TextField id="outlined-basic" label="Nome da Tarefa" variant="outlined" />
+                            <TextField
+                                id="nome_tarefa" label="Nome Tarefa" name="nome_tarefa"
+                                variant="outlined"
+                                required
+                                onChange={e => { limit(e, 100); setValue(e.target.value) }}
+                                error={!value}
+                            />
                         </Box>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DemoContainer components={['DateField', 'DateField']}>
-                                <DateField label="Início Tarefa" />
-                                <DateField
-                                    label="Fim Tarefa"
-                                />
+                                <DatePicker label="Início Tarefa" />
+                                <DatePicker label="Fim Tarefa" />
                             </DemoContainer>
                         </LocalizationProvider>
-                        <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-                            <TextField
+                        
+                            <TextField sx={{ mt: 2 }}
                                 id="standard-multiline-flexible"
                                 label="Descrição"
                                 multiline
@@ -275,18 +274,12 @@ export default function Tarefas() {
                                 value={open.descricao}
                                 minRows={3}
                             />
-                        </Typography>
-                        <br />
-                        <Button variant="contained" onClick={handleClose2}>Salvar</Button>
+                        
+                        <Button sx={{ mt: 2 }} variant="contained" onClick={() => setOpen2(false)}>Salvar</Button>
                     </Box>
                 </Fade>
 
             </Modal>
-
-        </section>
-    }
-
-    return (
-        <MenuPage secao={secao} />
+        </div>
     )
 }
