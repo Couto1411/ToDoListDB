@@ -2,14 +2,20 @@ const db = require("../db")
 
 const postConvite = async(req,res) =>{
     try{
+        console.log(req.body)
         if(!req.body.usuario_id) res.status(400).send("Não possui usuário")
         if(!req.body.lista_id) res.status(400).send("Não possui lista")
-        await db.promise().query(`INSERT INTO convidado(usuario_id,lista_id,estado_convite) VALUES(${req.body.usuario_id},${req.body.lista_id},0)`)
-            .then(result=>res.status(200).send())
-            .catch(err=>{
-                if(err.errno===1062) res.status(405).send("Convite já feito")
-                else throw err
-            })
+        let id=await db.promise().query(`SELECT usuario_id FROM lista WHERE lista_id=${req.body.lista_id}`)
+            .then(result=>{return result[0]})
+            .catch(err=>{throw err})
+        if(id=req.body.usuario_id){
+            await db.promise().query(`INSERT INTO convidado(usuario_id,lista_id,estado_convite) VALUES(${req.body.usuario_id},${req.body.lista_id},0)`)
+                .then(result=>res.status(200).send())
+                .catch(err=>{
+                    if(err.errno===1062) res.status(403).send("Convite já feito")
+                    else throw err
+                })
+        }else res.status(402).send("Usuario não é o criador")
     } catch (error) {
         console.log(error);
         return res.status(500).json({ message: error });

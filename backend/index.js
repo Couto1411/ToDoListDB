@@ -3,6 +3,7 @@ const cors = require('cors');
 const {validaToken,criaToken, encryptPassword} = require('./auth')
 const db = require('./db');
 const { getConvites, postConvite, aceitaConvite, rejeitaConvite } = require("./api/notificacao");
+const { getUsuarios } = require("./api/tarefa");
 
 const app = express()
 
@@ -57,6 +58,9 @@ app.get("/convites/:userId",validaToken,getConvites)
 app.put("/convites/aceita",validaToken,aceitaConvite)
 // Rejeita convites
 app.delete("/convites/rejeita/:userId/:listaId",validaToken,rejeitaConvite)
+
+// Busca usuarios
+app.get("/usuarios",validaToken,getUsuarios)
 
 
 app.listen(8081, () => {

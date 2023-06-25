@@ -57,21 +57,6 @@ export async function CriaTarefa(props,listaId,payload,setTarefas){
     })
 }
 
-export async function CriaConvite(props,listaId,usuarioId){
-    await Axios.post(baseUrl+'novoconvite',{
-        "lista_id": listaId,
-        "usuario_id": usuarioId
-    },{
-        headers: {
-            'Authorization': sessionStorage.getItem("token")
-        }
-    })
-    .catch((error)=>{
-        if (error?.response?.status===401) props.navigate('/login')
-        console.log(error)
-    })
-}
-
 export async function GetConvites(props,setConvites){
     await Axios.get(baseUrl+'convites/'+sessionStorage.getItem('userId'),{
         headers: {
@@ -119,6 +104,44 @@ export async function RejeitaConvite(props,lista_id){
     })
     .catch((error)=>{
         if (error?.response?.status===401) props.navigate('/login')
+        console.log(error)
+    })
+}
+
+export async function ProcuraUsuarios(props,nome,setUsuarios){
+    await Axios.get(baseUrl+'usuarios?nome='+nome,{
+        headers: {
+            'Authorization': sessionStorage.getItem("token")
+        }
+    })
+    .then(response=>{
+        if(response.data.token) sessionStorage.setItem('token',response.data.token)
+        setUsuarios(response.data.resposta)
+    })
+    .catch((error)=>{
+        if (error?.response?.status===401) props.navigate('/login')
+        console.log(error)
+    })
+}
+
+export async function Convidar(props,id,setConvidados,setSeeNovoConvite){
+    await Axios.post(baseUrl+'novoconvite',{
+        usuario_id: id,
+        lista_id: sessionStorage.getItem('listaId')
+    },{
+        headers: {
+            'Authorization': sessionStorage.getItem("token")
+        }
+    })
+    .then(response=>{
+        console.log(response)
+        if(response.data.token) sessionStorage.setItem('token',response.data.token)
+        setConvidados([])
+        setSeeNovoConvite(false)
+    })
+    .catch((error)=>{
+        if (error?.response?.status===401) props.navigate('/login')
+        if (error?.response?.status===403) document.getElementById('helptext').style.display='block'
         console.log(error)
     })
 }
