@@ -87,3 +87,38 @@ export async function GetConvites(props,setConvites){
         console.log(error)
     })
 }
+
+export async function AceitaConvite(props,lista_id){
+    await Axios.put(baseUrl+'convites/aceita',{
+        usuario_id:sessionStorage.getItem('userId'),
+        lista_id: lista_id
+    },{
+        headers: {
+            'Authorization': sessionStorage.getItem("token")
+        }
+    })
+    .then(response=>{
+        if(response.data.token) sessionStorage.setItem('token',response.data.token)
+        return true
+    })
+    .catch((error)=>{
+        if (error?.response?.status===401) props.navigate('/login')
+        console.log(error)
+    })
+}
+
+export async function RejeitaConvite(props,lista_id){
+    await Axios.delete(baseUrl+'convites/rejeita/'+sessionStorage.getItem('userId')+'/'+lista_id,{
+        headers: {
+            'Authorization': sessionStorage.getItem("token")
+        }
+    })
+    .then(response=>{
+        if(response.data.token) sessionStorage.setItem('token',response.data.token)
+        return true
+    })
+    .catch((error)=>{
+        if (error?.response?.status===401) props.navigate('/login')
+        console.log(error)
+    })
+}
