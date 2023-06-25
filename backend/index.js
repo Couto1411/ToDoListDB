@@ -2,23 +2,14 @@ const express = require("express"); //import express
 const cors = require('cors');
 const {validaToken,criaToken, encryptPassword} = require('./auth')
 const db = require('./db');
+const { getConvites, postConvite, aceitaConvite, rejeitaConvite } = require("./api/notificacao");
 
 const app = express()
 
 app.use(cors())
 app.use(express.json())
 
-// Teste
-app.get("/get", (req,res)=>{
-    db.query("SELECT * FROM usuario",(err,result)=>{
-        if(err) {
-            res.status(500).send(err)
-        } 
-            res.json(result)
-        }
-    );  
-});
-
+// Cadastro
 app.post("/signup", (req,res)=> {
     try {
         let valores =[]
@@ -26,11 +17,14 @@ app.post("/signup", (req,res)=> {
         valores[2]=encryptPassword(valores[2])
         db.query("INSERT INTO usuario (nome_usuario,nome,senha,telefone1,telefone2,email) VALUES(?,?,?,?,?,?)",valores,(err,result)=>{
             if(err){
-                console.log(err)
-                res.status(500).send(err)
+                if(err.errno===1062) res.status(405).send("Usuario já cadastrado")
+                else throw err
+            }else{
+                const token= criaToken({...req.body},true,res)
+                db.query(`SELECT usuario_id from usuario where email="${req.body.email}"`, (err,result)=>{
+                    res.status(200).json({id:result[0].usuario_id,token:token})
+                })
             }
-            const token= criaToken({...req.body},true,res)
-            res.status(200).json({token:token})
         });
     } catch (error) {
         console.log(error);
@@ -42,11 +36,11 @@ app.post("/signup", (req,res)=> {
 app.post("/login", (req,res)=> {
     try {
         db.query("SELECT * FROM usuario WHERE email = ?",[req.body.email],(err,result)=>{
-            if(err) res.status(500).send(err)
+            if(err) throw err
             if(!result[0]) res.status(404).send("Não encontrado")
             else{
                 const token = criaToken({...req.body},result[0].senha,res)
-                res.status(200).json({id:result[0].id,token:token})
+                if(token) res.json({id:result[0].usuario_id,token:token})
             }
         });
     } catch (error) {
@@ -55,13 +49,15 @@ app.post("/login", (req,res)=> {
     }
 })
 
-// Teste Login
-app.get("/teste", validaToken, (req,res)=>{
-    db.query("SELECT * FROM usuario",(err,result)=>{
-        if(err) {  res.status(500).send(err) } 
-        res.json({token:req.headers.authorization,result:result})
-    });  
-});
+// Faz convite
+app.post("/novoconvite",validaToken,postConvite)
+// Busca convites
+app.get("/convites/:userId",validaToken,getConvites)
+// Aceita convites
+app.put("/convites/aceita",validaToken,aceitaConvite)
+// Rejeita convites
+app.delete("/convites/rejeita/:userId/:listaId",validaToken,rejeitaConvite)
+
 
 app.listen(8081, () => {
     console.log("listening")
