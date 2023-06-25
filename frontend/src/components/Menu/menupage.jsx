@@ -92,10 +92,10 @@ export default function MenuPage({secao: Secao, tamanho}){
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
                         {'Produzido por: '}
-                        <Link color="inherit" href="https://github.com/Couto1411"> Gabriel Couto</Link>{', '}
-                        <Link color="inherit" href="https://github.com/LucasG4K"> Lucas de Souza</Link>{', '}
-                        <Link color="inherit" href="https://github.com/mkssantos"> Marcus Vinícius</Link>{', '}
-                        <Link color="inherit" href="https://github.com/pablossousa"> Pablo Silva</Link>{', 2023.'}
+                        <Link target="_blank" color="inherit" href="https://github.com/Couto1411"> Gabriel Couto</Link>{', '}
+                        <Link target="_blank" color="inherit" href="https://github.com/LucasG4K"> Lucas de Souza</Link>{', '}
+                        <Link target="_blank" color="inherit" href="https://github.com/mkssantos"> Marcus Vinícius</Link>{', '}
+                        <Link target="_blank" color="inherit" href="https://github.com/pablossousa"> Pablo Silva</Link>{', 2023.'}
                     </Typography>
                 </Container>
             </Box>

@@ -1,0 +1,24 @@
+.TEKOtarefa {
+    font-family: 'Montserrat', sans-serif;
+    font-family: 'Teko', sans-serif;
+    text-transform: uppercase;
+    font-size: 2.3em;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+}
+
+.tarefa {
+    text-decoration: none;
+    color: white;
+}
+
+.deOndeVem {
+    opacity: 0.5;
+}
+
+.modal {
+    width: 50%;
+}
