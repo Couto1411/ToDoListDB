@@ -124,7 +124,7 @@ export default function LoginComponent(props) {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description">
                 <Fade in={open}>
-                    <Container component="main" maxWidth="md" sx={{
+                    <Container maxWidth="md" sx={{
                         marginTop: 8, p: 5, borderRadius: 2.3,
                         display: 'flex', flexDirection: 'column', alignItems: 'center',
                         color: "white", bgcolor: "black",}}>
