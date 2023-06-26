@@ -28,4 +28,5 @@ INSERT INTO `todolist`.`convidado`
 VALUES
 (2,1,0);
 
+select * from usuario;
 

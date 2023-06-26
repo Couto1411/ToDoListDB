@@ -4,7 +4,7 @@ const {validaToken,criaToken, encryptPassword} = require('./auth')
 const db = require('./db');
 const { getConvites, postConvite, aceitaConvite, rejeitaConvite, deleteConvite } = require("./api/notificacao");
 const { getUsuarios, getTarefas, postTarefa, updateTarefa, deletaTarefa } = require("./api/tarefa");
-const { deleteLista } = require("./api/lista");
+const { deleteLista, getListas, postLista } = require("./api/lista");
 const { getUsuario, editUsuario } = require("./api/user");
 
 const app = express()
@@ -81,6 +81,11 @@ app.delete("/user/:userId/lista/:listaId/tarefas/:tarefaId",validaToken,deletaTa
 app.get("/user/:userId",validaToken,getUsuario)
 // Edita informações do usuário
 app.put("/user/:userId",validaToken,editUsuario)
+
+// Busca listas
+app.get("/listas/:userId",validaToken,getListas)
+// Cria listas
+app.post("/novalista",validaToken,postLista)
 
 
 app.listen(8081, () => {
