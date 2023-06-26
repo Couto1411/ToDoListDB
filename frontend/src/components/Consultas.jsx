@@ -234,11 +234,14 @@ export async function GetInfoUser(props,setUser){
     })
 }
 
-export async function EditInfoUser(props,user){
+export async function EditInfoUser(props,user,setUser){
     await Axios.put(baseUrl+'user/'+sessionStorage.getItem('userId'),user,{
         headers: {
             'Authorization': sessionStorage.getItem("token")
         }
+    })
+    .then(result=>{
+        setUser({...user,senha:"",confsenha:""})
     })
     .catch((error)=>{
         if (error?.response?.status===401) props.navigate('/login')

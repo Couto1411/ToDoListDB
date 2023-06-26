@@ -12,13 +12,18 @@ import InputMask from "react-input-mask";
 
 export default function Perfil(props) {
     const [user,setUser] = useState({});
+    const [erroconfsenha,setErroconfsenha] = useState(false);
 
     useEffect(()=>{
         GetInfoUser(props,setUser)
     },[])
 
     function handleSave(){
-        EditInfoUser(props,user)
+        if((user?.senha && user.senha===user.confsenha) || !user.senha){
+            setErroconfsenha(false)
+            EditInfoUser(props,user,setUser)
+        }
+        else setErroconfsenha(true)
     }
 
     const secao = <Grid container spacing={2} component="section">
@@ -69,6 +74,18 @@ export default function Perfil(props) {
                         <TextField
                             value={user?.email||""} onChange={e=>{setUser({...user,email:e.target.value})}}
                             required fullWidth label="Email"/>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <TextField
+                            value={user?.senha||""} onChange={e=>{setUser({...user,senha:e.target.value})}}
+                            fullWidth label="Senha"/>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <TextField
+                            error={erroconfsenha}
+                            disabled={!user?.senha}
+                            value={user?.confsenha||""} onChange={e=>{setUser({...user,confsenha:e.target.value})}}
+                            fullWidth label="Confirma Senha"/>
                     </Grid>
                     <Grid item xs={12}>
                         <Button fullWidth

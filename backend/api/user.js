@@ -1,3 +1,4 @@
+const { encryptPassword } = require("../auth");
 const db = require("../db")
 
 const getUsuario = async(req,res) =>{
@@ -21,9 +22,15 @@ const editUsuario = async(req,res) =>{
         else if(!req.body.nome_usuario) res.status(400).send("Não possui nome de usuario")
         else if(!req.body.email) res.status(400).send("Não possui email")
         else{
-            await db.promise().query(`UPDATE usuario SET nome_usuario = "${req.body.nome_usuario}", nome = "${req.body.nome_usuario}", email = "${req.body.nome_usuario}", telefone1 = "${req.body?.telefone1}", telefone2 = "${req.body?.telefone2}" WHERE usuario_id = ${req.params.userId}`)
-                .then(result=>{res.json({token:req.headers.authorization})})
-                .catch((err) => {throw err});
+            if(req.body.senha && req.body.senha===req.body.confsenha){
+                await db.promise().query(`UPDATE usuario SET nome_usuario = "${req.body.nome_usuario}", senha = "${encryptPassword(req.body.senha)}", nome = "${req.body.nome_usuario}", email = "${req.body.nome_usuario}", telefone1 = "${req.body?.telefone1}", telefone2 = "${req.body?.telefone2}" WHERE usuario_id = ${req.params.userId}`)
+                    .then(result=>{res.json({token:req.headers.authorization})})
+                    .catch((err) => {throw err});
+            }else{
+                await db.promise().query(`UPDATE usuario SET nome_usuario = "${req.body.nome_usuario}", nome = "${req.body.nome_usuario}", email = "${req.body.nome_usuario}", telefone1 = "${req.body?.telefone1}", telefone2 = "${req.body?.telefone2}" WHERE usuario_id = ${req.params.userId}`)
+                    .then(result=>{res.json({token:req.headers.authorization})})
+                    .catch((err) => {throw err});
+            }
         }
     } catch (error) {
         console.log(error);
