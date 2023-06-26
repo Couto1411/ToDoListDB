@@ -58,8 +58,7 @@ export default function Notificacoes(props){
         })
     }
 
-    const secao = () =>{
-        return <section>
+    const secao = <section>
                 <Box align="center" className="TEKOTITLE" sx={{ flexGrow: 1 }}>
                     Convites
                 </Box>
@@ -67,7 +66,6 @@ export default function Notificacoes(props){
                     {renderizaConvites()}
                 </Box>
             </section>
-    }
 
     return(
         <MenuPage secao={secao}/>

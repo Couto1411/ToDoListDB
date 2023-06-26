@@ -121,8 +121,7 @@ export default function Tarefas(props) {
         }
     }
 
-    const secao = () => {
-        return <Container>
+    const secao = <Container>
             <Box variant="3" display="flex">
                 <Box edge="end" align="center" className="TEKOtarefa" sx={dados.lista?.admin?{ flexGrow: 1, pl:4 }:{ flexGrow: 1,pr:4}}>
                     {dados.lista.nome}
@@ -164,9 +163,7 @@ export default function Tarefas(props) {
             <Pagination 
                 hideNextButton hidePrevButton page={pagination+1} count={Math.ceil(dados.usuarios.length/10)} 
                 onChange={e=>{setPagination(e.target.textContent-1)}}  className="pagination" />}
-
         </Container>
-    }
 
     return (
         <div>
@@ -175,10 +172,10 @@ export default function Tarefas(props) {
             {/* MODAL TAREFA X */}
             <Modal open={Boolean(open)}  onClose={() => setOpen(false)}>
                 <Fade in={Boolean(open)}>
-                    <Box onSubmit={() => handleEditTarefa()} component="form" target="votar"  sx={style} className="modal">
+                    <Box onSubmit={() => handleEditTarefa()} component="form" target="votar" sx={style} className="modal">
                         <TextField 
                             onChange={e=>{limit(e,30);setOpen({...open,titulo:e.target.value})}}
-                            value={open.titulo} variant="standard" fullWidth required
+                            value={open?.titulo||""} variant="standard" fullWidth required
                             InputProps={{ disableUnderline: true,style: {fontSize: 30} }}/>
                         <Typography className="deOndeVem">
                             na {dados.lista.nome}
@@ -218,7 +215,7 @@ export default function Tarefas(props) {
                                 label="Descrição"
                                 multiline minRows={3} maxRows={10}
                                 variant="standard" fullWidth required
-                                value={open.descricao}/>
+                                value={open?.descricao||""}/>
                         <br/>
                         <Button sx={{ mt: 2 }} variant="contained" type="submit">Salvar</Button>
                     </Box>
@@ -297,7 +294,7 @@ export default function Tarefas(props) {
                     </Box>
                 </Fade>
             </Modal>
-            <iframe name="votar" style={{display:'none'}}></iframe>
+            <iframe title="temp" name="votar" style={{display:'none'}}></iframe>
         </div>
     )
 }

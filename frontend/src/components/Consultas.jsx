@@ -219,3 +219,29 @@ export async function DeletaLista(props){
         console.log(error)
     })
 }
+
+export async function GetInfoUser(props,setUser){
+    await Axios.get(baseUrl+'user/'+sessionStorage.getItem('userId'),{
+        headers: {
+            'Authorization': sessionStorage.getItem("token")
+        }
+    })
+    .then(response=>{setUser(response.data.resposta)})
+    .catch((error)=>{
+        if (error?.response?.status===401) props.navigate('/login')
+        else if (error?.response?.status===403) props.navigate('/listas')
+        console.log(error)
+    })
+}
+
+export async function EditInfoUser(props,user){
+    await Axios.put(baseUrl+'user/'+sessionStorage.getItem('userId'),user,{
+        headers: {
+            'Authorization': sessionStorage.getItem("token")
+        }
+    })
+    .catch((error)=>{
+        if (error?.response?.status===401) props.navigate('/login')
+        console.log(error)
+    })
+}

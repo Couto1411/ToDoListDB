@@ -13,6 +13,7 @@ import Modal from '@mui/material/Modal';
 import Fade from "@mui/material/Fade";
 
 import PersonIcon from '@mui/icons-material/Person';
+import InputMask from "react-input-mask";
 
 import { limit } from "../utils";
 import { Login, SignUp } from "../Consultas";
@@ -55,8 +56,8 @@ export default function LoginComponent(props) {
                                     nome_usuario: data.get('user_name'),
                                     nome: data.get('nome_cadastro'),
                                     senha: data.get('senha_cadastro'),
-                                    telefone1: data.get('Telefone_1'),
-                                    telefone2: data.get('Telefone_2'),
+                                    telefone1: data.get('Telefone_1').replace(/\D+/g, ''),
+                                    telefone2: data.get('Telefone_2').replace(/\D+/g, ''),
                                     email: data.get('email_cadastro')
                                 })
                             }
@@ -151,16 +152,28 @@ export default function LoginComponent(props) {
                                         id="user_name" name="user_name" label="Nome usuário"/>
                                 </Grid>
                                 <Grid item xs={12} sm={6}>
-                                    <TextField
-                                        onChange={e=>limit(e,14)} 
-                                        fullWidth
-                                        id="Telefone_1" name="Telefone_1" label="Telefone 1"/>
+                                    <InputMask
+                                        onChange={e=>{
+                                            if(e.target.value.replace(/\D+/g, '').length > 11) {
+                                            e.target.value = e.target.value.substring(0, 11);
+                                        }}} 
+                                        mask="(99) 99999-9999"
+                                        disabled={false}>
+                                        <TextField label={"Telefone 1"} fullWidth
+                                        id="Telefone_1" name="Telefone_1"/>
+                                    </InputMask>
                                 </Grid>
                                 <Grid item xs={12} sm={6}>
-                                    <TextField
-                                        onChange={e=>limit(e,14)} 
-                                        fullWidth
-                                        id="Telefone_2" name="Telefone_2" label="Telefone 2"/>
+                                    <InputMask
+                                        onChange={e=>{
+                                            if(e.target.value.replace(/\D+/g, '').length > 11) {
+                                            e.target.value = e.target.value.substring(0, 11);
+                                        }}} 
+                                        mask="(99) 99999-9999"
+                                        disabled={false}>
+                                        <TextField label={"Telefone 2"} fullWidth
+                                        id="Telefone_2" name="Telefone_2"/>
+                                    </InputMask>
                                 </Grid>
                                 <Grid item xs={12}>
                                     <TextField

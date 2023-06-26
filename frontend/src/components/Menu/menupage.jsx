@@ -80,7 +80,7 @@ export default function MenuPage({secao: Secao, tamanho}){
             {/* Main */}
             <Container component="main" maxWidth={"md"&&tamanho} sx={{ mb: 4 }}>
                 <Paper variant="outlined" sx={{ bgcolor: '#282828',my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
-                    <Secao/>
+                    {Secao}
                 </Paper>
             </Container >
 

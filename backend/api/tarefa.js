@@ -18,7 +18,7 @@ const postTarefa = async(req,res) =>{
             }
             if (usuarios[0].usuario_id===Number(req.params.userId) || usuarios.find(el=>el.convidados_id===Number(req.params.userId))){
                     await db.promise().query(`INSERT INTO tarefa(descricao,data_cadastro,data_vencimento,concluida,titulo,lista_id,usuario_id) VALUES
-                                            ("${req.body.descricao}", "${req.body.data_inicio}","${req.body.data_vencimento}",0,"${req.body.descricao}",${req.params.listaId},${req.params.userId})`)
+                                            ("${req.body.descricao}", "${req.body.data_inicio}","${req.body.data_vencimento}",0,"${req.body.nome}",${req.params.listaId},${req.params.userId})`)
                         .then(result=> res.json({token:req.headers.authorization}))
                         .catch((err) => {throw err});
             } else res.status(403).send("Usuário não é criador ou convidado")
