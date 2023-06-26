@@ -2,8 +2,10 @@ const express = require("express"); //import express
 const cors = require('cors');
 const {validaToken,criaToken, encryptPassword} = require('./auth')
 const db = require('./db');
-const { getConvites, postConvite, aceitaConvite, rejeitaConvite } = require("./api/notificacao");
-const { getListas, postLista } = require("./api/lista");
+const { getConvites, postConvite, aceitaConvite, rejeitaConvite, deleteConvite } = require("./api/notificacao");
+const { getUsuarios, getTarefas, postTarefa, updateTarefa, deletaTarefa } = require("./api/tarefa");
+const { deleteLista } = require("./api/lista");
+const { getUsuario, editUsuario } = require("./api/user");
 
 const app = express()
 
@@ -50,18 +52,36 @@ app.post("/login", (req,res)=> {
     }
 })
 
+// Deleta lista
+app.delete("/user/:userId/lista/:listaId",validaToken,deleteLista)
+
 // Faz convite
 app.post("/novoconvite",validaToken,postConvite)
+// Desfaz convites
+app.delete("/user/:userId/desconvidar/:listaId/user/:conviteId",validaToken,deleteConvite)
 // Busca convites
 app.get("/convites/:userId",validaToken,getConvites)
 // Aceita convites
 app.put("/convites/aceita",validaToken,aceitaConvite)
 // Rejeita convites
 app.delete("/convites/rejeita/:userId/:listaId",validaToken,rejeitaConvite)
-// Busca listas
-app.get("/listas/:userId",validaToken,getListas)
-// Cria listas
-app.post("/novalista",validaToken,postLista)
+
+// Busca usuarios
+app.get("/user/:userId/lista/:listaId/usuarios",validaToken,getUsuarios)
+// Busca tarefas
+app.get("/user/:userId/lista/:listaId/tarefas",validaToken,getTarefas)
+// Cria tarefas
+app.post("/user/:userId/lista/:listaId/tarefas",validaToken,postTarefa)
+// Edita tarefas
+app.put("/user/:userId/lista/:listaId/tarefas",validaToken,updateTarefa)
+// Deleta tarefas
+app.delete("/user/:userId/lista/:listaId/tarefas/:tarefaId",validaToken,deletaTarefa)
+
+// Pega informações do usuário
+app.get("/user/:userId",validaToken,getUsuario)
+// Edita informações do usuário
+app.put("/user/:userId",validaToken,editUsuario)
+
 
 app.listen(8081, () => {
     console.log("listening")

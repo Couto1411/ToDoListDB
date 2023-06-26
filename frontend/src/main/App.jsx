@@ -8,6 +8,14 @@ import Routes from './Routes'
 const darkTheme = createTheme({
     palette: {
       mode: 'dark',
+      primary:{
+        main: '#bafff3',
+        dark: '#c2cbc9'
+      },
+      secondary:{
+        main: '#ffffff',
+        dark: '#595959'
+      }
     },
   });
   

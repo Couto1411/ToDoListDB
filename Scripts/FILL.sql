@@ -1,10 +1,11 @@
 INSERT INTO `todolist`.`usuario`
 (`nome_usuario`,`nome`,`email`,`senha`,`telefone1`,`telefone2`)
 VALUES
-("lucas","lucas","lucas","lucas","lucas","lucas"),
-("marcus","marcus","marcus","marcus","marcus","marcus"),
-("couto","couto","couto","couto","couto","couto"),
-("pablo","pablo","pablo","pablo","pablo","pablo");
+("teste","teste","teste","$2b$10$bG5isziDLSSkx/zcdZhQsuAfWyoC4BJqQ/x7tmt5A3yenAezdUd0O","teste","teste"),
+("couto","couto","couto","$2b$10$aTZDSQ8IyT92UKKmGI1VI.l4kClixOocDm5Ln/ZDJZLmb.aqGywPK","couto","couto"),
+("marcus","marcus","marcus","$2b$10$CHFoK17eCKI8tMfCiZCb7.wQj3sEQplx8Ju4mBlkYpOm7z44gBz7O","marcus","marcus"),
+("lucas","lucas","lucas","$2b$10$.k.4WHusE4GeDPwW05B8aOZKeEXf0fWcvS9/ygguL0Y9VFxJm7kUO","lucas","lucas"),
+("pablo","pablo","pablo","$2b$10$Rs.McBRr10ogymdt5QVC3Oi267/z8zkANK5e0ELR5bjK6IMwDemEm","pablo","pablo");
 
 INSERT INTO `todolist`.`lista`
 (`nome`,`data_hora_crt`,`data_hora_mod`,`usuario_id_mod`,`usuario_id`)

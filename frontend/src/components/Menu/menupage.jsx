@@ -20,7 +20,7 @@ import PersonIcon from '@mui/icons-material/Person';
 
 import { useNavigate } from "react-router-dom";
 
-export default function MenuPage({secao: Secao}){
+export default function MenuPage({secao: Secao, tamanho}){
     // Faz Menu aparecer
     const [menuAppearing, setMenuAppearing] = React.useState(null);
     const navigate = useNavigate();
@@ -78,9 +78,9 @@ export default function MenuPage({secao: Secao}){
             </AppBar>
 
             {/* Main */}
-            <Container component="main" maxWidth="md" sx={{ mb: 4 }}>
+            <Container component="main" maxWidth={"md"&&tamanho} sx={{ mb: 4 }}>
                 <Paper variant="outlined" sx={{ bgcolor: '#282828',my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
-                    <Secao/>
+                    {Secao}
                 </Paper>
             </Container >
 
@@ -92,10 +92,10 @@ export default function MenuPage({secao: Secao}){
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
                         {'Produzido por: '}
-                        <Link color="inherit" href="https://github.com/Couto1411"> Gabriel Couto</Link>{', '}
-                        <Link color="inherit" href="https://github.com/LucasG4K"> Lucas de Souza</Link>{', '}
-                        <Link color="inherit" href="https://github.com/mkssantos"> Marcus Vinícius</Link>{', '}
-                        <Link color="inherit" href="https://github.com/pablossousa"> Pablo Silva</Link>{', 2023.'}
+                        <Link target="_blank" color="inherit" href="https://github.com/Couto1411"> Gabriel Couto</Link>{', '}
+                        <Link target="_blank" color="inherit" href="https://github.com/LucasG4K"> Lucas de Souza</Link>{', '}
+                        <Link target="_blank" color="inherit" href="https://github.com/mkssantos"> Marcus Vinícius</Link>{', '}
+                        <Link target="_blank" color="inherit" href="https://github.com/pablossousa"> Pablo Silva</Link>{', 2023.'}
                     </Typography>
                 </Container>
             </Box>
