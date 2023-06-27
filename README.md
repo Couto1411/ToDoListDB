@@ -71,3 +71,16 @@ Implemente a aplicação especificada acima de forma que ela faça uso do banco 
 
 Escreva um script SQL com todas as consultas utilizadas na implementação da aplicação.
 </p>
+
+** Execução e Comandos. **
+
+<h1>Dependencia</h1>
+<p>Versão Node:<a href="https://nodejs.org/en">18.16.0</a></p>
+Deve-se se execultar "Scripts/TODOLISTCREATE.sql";
+Deve alterar os dados de "Backend/chave.js" para incriptação de senhas e "Backend/db.js" dadso de uma coneção do banco de dados que posssui privilagios de "DBManagent".
+Esses comandos devem ser execulatados no front-end e back-end, deve se garantir que as portas estejam livres '8076', '3000' respectivamente.
+
+| Comando                |  Função                                                                                           |
+| -----------------------| ------------------------------------------------------------------------------------------------- |
+|  `npm i`               | Instalar todos os pacotes que estão no Package.json                                               |
+|  `npm start`           | Executa um comando predefinido, propriedade do objeto de um pacote "scripts".                     |

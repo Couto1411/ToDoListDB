@@ -8,4 +8,6 @@ const db = mysql.createConnection({
     
 })
 
-module.exports = db;
+module.exports = {
+    Token_Key:"Sua-chave-aqui", db:db
+}

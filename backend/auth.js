@@ -1,6 +1,6 @@
 var jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt')
-const Token_Key = require('./chave')
+const bcrypt = require('bcrypt');
+const { Token_Key } = require('./config');
 
 const validaToken = (req, res, next) => {
     // Deve ser mandado como 'bearer TOKENHERE' pois o destructuring ignora o primeiro termo
