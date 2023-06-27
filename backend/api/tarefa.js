@@ -132,7 +132,7 @@ const getUsuarios = async(req,res) =>{
                 .catch((err) => {throw err});
             }
             if (usuarios[0].usuario_id===Number(req.params.userId) || usuarios.find(el=>el.convidados_id===Number(req.params.userId))){
-                let convidados = await db.promise().query('SELECT u.usuario_id as id,u.nome FROM usuario u WHERE nome_usuario LIKE ? ',[`%${req.query.nome}%`])
+                let convidados = await db.promise().query('SELECT u.usuario_id as id,u.nome FROM usuario u WHERE nome_usuario LIKE ? and u.usuario_id != ? ',[`%${req.query.nome}%`,req.params.userId])
                     .then(result=>{return result[0]})
                     .catch((err) => {throw err});
                 res.json({resposta:convidados,token:req.headers.authorization})
