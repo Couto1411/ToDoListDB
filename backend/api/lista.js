@@ -77,8 +77,6 @@ const deleteLista = async(req,res) =>{
     }
 }
 
-
-
 module.exports = {
     getListas, getListasCompartilhadas, updateLista, postLista, deleteLista
 }

@@ -40,7 +40,7 @@ export default function MenuPage({secao: Secao, tamanho}){
                 <Toolbar>
                     <img className="img-fluid" alt="Imagem não encontrada" src={require('./../Imgs/Logo.png')}></img>
                     <Typography variant="h4" sx={{ mt:0.5,ml:2,flexGrow: 1 }}>
-                        <div className="TEKO">To Do List</div>
+                        <div className="TEKO" onClick={ ()=> vaiPara('listas') }>To Do List</div>
                     </Typography>
                     <IconButton aria-label="account of current user" aria-controls="menu-appbar" aria-haspopup="true" color="inherit"
                         className="svg_icons"onClick={e=>{setMenuAppearing(e.currentTarget)}}>

@@ -1,12 +1,14 @@
 import React, { useEffect } from "react";
 import "./listas.css"
 import MenuPage from "../Menu/menupage";
-import { Box, Grid, Button, Typography, List, Container } from "@mui/material";
+import { Box, Grid, Button, Typography, List, Container, IconButton, Modal, Fade } from "@mui/material";
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
-import { GetListas } from "../Consultas";
+import { DeletaLista, GetListas } from "../Consultas";
 
 // Listas criadas e Listas compartilhadas comigo, referência "init" no Figma
 export default function Listas(props) {
@@ -14,11 +16,21 @@ export default function Listas(props) {
     const [lista, setLista] = React.useState([]);
     const [listaCompartilhada, setListaCompartilhada] = React.useState([]);
     const [toggle, setToggle] = React.useState(true);
+    const [deleta, setDeleta] = React.useState(false);
 
     useEffect(() => {
         GetListas(props,setLista, setListaCompartilhada);
     },[]);
 
+    // function handleEditTarefa(){
+    //     if (dayjs(open.data_cadastro,"YYYY-MM-DD")<=dayjs(open.data_vencimento,"YYYY-MM-DD")) {
+    //         if(EditaTarefa(props,open)){
+    //             setDados({...dados, tarefas:dados.tarefas.map(el => (el.tarefa_id === open.tarefa_id ? {...open} : el))})
+    //             setOpen(false)
+    //         }
+    //     }
+    // }
+ 
     function renderizaMinhasListas() {
         return lista.map((value) => {
             const addLeadingZero = (number) => {
@@ -37,6 +49,12 @@ export default function Listas(props) {
                     <ListItemButton role={undefined} onClick={ () => { props.navigate('/tarefas'); sessionStorage.setItem('listaId', value.lista_id) } } dense >
                         <ListItemText id={labelId} primary={`${value.nome}`} secondary= { "Última modificação às " + formattedDatetime }/>
                     </ListItemButton>
+                    <IconButton onClick={()=>{ {} }} edge="end" aria-label="delete" sx={{ flexGrow: 0 }}>
+                        <EditIcon sx={{ color: "white" }} />
+                    </IconButton>
+                    <IconButton onClick={()=>{setDeleta(true)}} edge="end" aria-label="delete" sx={{ flexGrow: 0 }}>
+                        <DeleteIcon sx={{ color: "red" }} />
+                    </IconButton>
                 </ListItem>
             );
         })
@@ -92,7 +110,7 @@ export default function Listas(props) {
             {toggle ? renderizaMinhasListas() : renderizaListasCompartilhadas() }
             </List>
             { toggle && <Box sx={{m:2}} textAlign={"start"}>
-                <Button variant="outlined"  align="center" onClick={ {} }>
+                <Button variant="outlined"  align="center" onClick={ {  } }>
                     Nova Lista
                 </Button>
             </Box>}
