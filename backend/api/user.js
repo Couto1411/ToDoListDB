@@ -63,7 +63,7 @@ const editUsuario = async(req,res) =>{
                     .then(result=>{res.json({token:req.headers.authorization})})
                     .catch((err) => {throw err});
             }else{
-                await db.promise().query('UPDATE usuario SET nome_usuario = ?, nome = ?, email = ?, telefone1 = ?, telefone2 = ? WHERE usuario_id = ?}',[req.body.nome_usuario,req.body.nome,req.body.email,req.body?.telefone1,req.body?.telefone2,req.params.userId])
+                await db.promise().query('UPDATE usuario SET nome_usuario = ?, nome = ?, email = ?, telefone1 = ?, telefone2 = ? WHERE usuario_id = ?',[req.body.nome_usuario,req.body.nome,req.body.email,req.body?.telefone1,req.body?.telefone2,req.params.userId])
                     .then(result=>{res.json({token:req.headers.authorization})})
                     .catch((err) => {throw err});
             }
