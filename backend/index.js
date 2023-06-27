@@ -3,7 +3,7 @@ const cors = require('cors');
 const {validaToken,criaToken, encryptPassword} = require('./auth')
 const { getConvites, postConvite, aceitaConvite, rejeitaConvite, deleteConvite } = require("./api/notificacao");
 const { getUsuarios, getTarefas, postTarefa, updateTarefa, deletaTarefa } = require("./api/tarefa");
-const { deleteLista, getListas, postLista } = require("./api/lista");
+const { deleteLista, getListas, postLista, updateLista } = require("./api/lista");
 const { getUsuario, editUsuario, SignUp, Login } = require("./api/user");
 
 const app = express()
@@ -50,7 +50,9 @@ app.put("/user/:userId",validaToken,editUsuario)
 // Busca listas
 app.get("/listas/:userId",validaToken,getListas)
 // Cria listas
-app.post("/novalista",validaToken,postLista)
+app.post("/listas/:userId",validaToken,postLista)
+// Edita listas
+app.put("/listas/:userId",validaToken,updateLista)
 
 
 app.listen(8081, () => {

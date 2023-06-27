@@ -204,7 +204,7 @@ export async function DeletaTarefa(props,id){
     })
 }
 
-export async function GetListas(props,setListas, setListasCompartilhadas) {
+export async function GetListas(props, setListas, setListasCompartilhadas) {
     await Axios.get(baseUrl+'listas/'+sessionStorage.getItem('userId'),{
         headers: {
             'Authorization': sessionStorage.getItem("token")
@@ -216,6 +216,32 @@ export async function GetListas(props,setListas, setListasCompartilhadas) {
         setListasCompartilhadas(response.data.compartilhadas)
     })
     .catch((error) => {
+        if (error?.response?.status===401) props.navigate('/login')
+        console.log(error)
+    })
+}
+
+export async function CriaLista(props, payload) {
+    await Axios.post(baseUrl+'listas/'+sessionStorage.getItem('userId'), payload, {
+        headers: {
+            'Authorization': sessionStorage.getItem("token")
+        }
+    })
+    .then(response=>{return true})
+    .catch((error)=>{
+        if (error?.response?.status===401) props.navigate('/login')
+        console.log(error)
+    })
+}
+
+export async function EditaLista(props, payload) {
+    await Axios.put(baseUrl+'listas/'+sessionStorage.getItem('userId'), payload, {
+        headers: {
+            'Authorization': sessionStorage.getItem("token")
+        }
+    })
+    .then(response=>{return true})
+    .catch((error)=>{
         if (error?.response?.status===401) props.navigate('/login')
         console.log(error)
     })
