@@ -1,4 +1,5 @@
 /* LOGICO: */
+DROP IF EXISTS `todolist`;
 CREATE DATABASE IF NOT EXISTS `todolist`;
 USE `todolist`;
 
