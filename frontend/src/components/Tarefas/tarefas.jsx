@@ -92,7 +92,7 @@ export default function Tarefas(props) {
     }
 
     function handleNewTarefa(){
-        if (dayjs(NovaTarefa.data_inicio,"YYYY-MM-DD")<=dayjs(NovaTarefa.data_vencimento,"YYYY-MM-DD")) {
+        if ((NovaTarefa.data_inicio !== null && NovaTarefa.data_inicio !== "Invalid Date") && (dayjs(NovaTarefa.data_inicio,"YYYY-MM-DD")<=dayjs(NovaTarefa.data_vencimento,"YYYY-MM-DD") || NovaTarefa.data_vencimento==null)) {
             if(CriaTarefa(props,NovaTarefa)){
                 GetTarefas(props,setDados)
                 setNovaTarefa(false)
@@ -101,7 +101,7 @@ export default function Tarefas(props) {
     }
 
     function handleEditTarefa(){
-        if (dayjs(open.data_cadastro,"YYYY-MM-DD")<=dayjs(open.data_vencimento,"YYYY-MM-DD")) {
+        if ((open.data_cadastro != null && open.data_cadastro !== "Invalid Date") && (open.data_vencimento === null || dayjs(open.data_cadastro.split('T')[0],"YYYY-MM-DD")<=dayjs(open.data_vencimento.split('T')[0],"YYYY-MM-DD"))) {
             if(EditaTarefa(props,open)){
                 setDados({...dados, tarefas:dados.tarefas.map(el => (el.tarefa_id === open.tarefa_id ? {...open} : el))})
                 setOpen(false)
@@ -188,15 +188,16 @@ export default function Tarefas(props) {
                                     <Grid container spacing={1}>
                                         <Grid item xs={12} sm={6}>
                                         <DatePicker format="DD/MM/YYYY" error label="Início Tarefa" 
-                                            defaultValue={dayjs(open.data_cadastro)}
-                                            onChange={e => {setOpen({...open,data_cadastro:e.format("YYYY-MM-DD")})}}
+                                            defaultValue={dayjs(open.data_cadastro, "YYYY-MM-DD")}
+                                            onChange={e => {setOpen({...open,data_cadastro:e?e.format("YYYY-MM-DD"):null})}}
                                             slotProps={{textField: {required: true, variant: 'standard'}}}/></Grid>
                                         <Grid item xs={12} sm={6}>
                                         <DatePicker format="DD/MM/YYYY"  label="Fim Tarefa"
-                                            defaultValue={dayjs(open.data_vencimento)}
+                                            defaultValue={open.data_vencimento?dayjs(open.data_vencimento):null}
                                             minDate={dayjs(open.data_cadastro)}
-                                            onChange={e => {setOpen({...open,data_vencimento:e.format("YYYY-MM-DD")})}}
-                                            slotProps={{textField: {required: true, variant: 'standard'}}}/></Grid>
+                                            onChange={e => {setOpen({...open,data_vencimento:e?e.format("YYYY-MM-DD"):null})}}
+
+                                            slotProps={{textField: {variant: 'standard'}}}/></Grid>
                                     </Grid>
                                 </LocalizationProvider>
                             </Grid>
@@ -238,13 +239,13 @@ export default function Tarefas(props) {
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <Grid item xs={12} sm={6}><DatePicker format="DD/MM/YYYY" error label="Início Tarefa"
                                 defaultValue={dayjs()}
-                                onChange={e => {setNovaTarefa({...NovaTarefa,data_inicio:e.format("YYYY-MM-DD")})}}
+                                onChange={e => {setNovaTarefa({...NovaTarefa,data_inicio:e?e.format("YYYY-MM-DD"):null})}}
                                 slotProps={{textField: {required: true}}}/></Grid>
                             <Grid item xs={12} sm={6}><DatePicker format="DD/MM/YYYY"  label="Fim Tarefa"
                                 disabled={!(NovaTarefa.data_inicio!=='Invalid Date')}
                                 minDate={dayjs(NovaTarefa.data_inicio,"YYYY-MM-DD")}
-                                onChange={e => {setNovaTarefa({...NovaTarefa,data_vencimento:e.format("YYYY-MM-DD")})}}
-                                slotProps={{textField: {required: true}}}/></Grid>
+                                onChange={e => {setNovaTarefa({...NovaTarefa,data_vencimento:e?e.format("YYYY-MM-DD"):null})}}
+                                /></Grid>
                         </LocalizationProvider>
                         </Grid>
                         <TextField sx={{ mt: 2 }}

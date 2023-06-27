@@ -6,9 +6,9 @@ const atualizaLista = async(userId,listaId) => {
 }
 
 const postTarefa = async(req,res) =>{
+    console.log(req.body)
     try{
         if(!req.body.data_inicio) res.status(400).send("Não possui data início da tarefa")
-        else if(!req.body.data_vencimento) res.status(400).send("Não possui data vencimento da tarefa")
         else if(!req.body.nome) res.status(400).send("Não possui nome da tarefa")
         else if(!req.body.descricao) res.status(400).send("Não possui descrição da tarefa")
         else if(!Number(req.params.userId)) res.status(400).send("Não possui id de quem criou")
@@ -38,7 +38,6 @@ const updateTarefa = async(req,res) =>{
     try{
         if(!req.body.data_cadastro) res.status(400).send("Não possui data início da tarefa")
         else if(!req.body.tarefa_id) res.status(400).send("Não possui id da tarefa")
-        else if(!req.body.data_vencimento) res.status(400).send("Não possui data vencimento da tarefa")
         else if(!req.body.titulo) res.status(400).send("Não possui nome da tarefa")
         else if(!req.body.descricao) res.status(400).send("Não possui descrição da tarefa")
         else if(!Number(req.params.userId)) res.status(400).send("Não possui id de quem criou")
@@ -53,7 +52,7 @@ const updateTarefa = async(req,res) =>{
             }
             if (usuarios[0].usuario_id===Number(req.params.userId) || usuarios.find(el=>el.convidados_id===Number(req.params.userId))){
                 await db.promise().query('UPDATE tarefa SET descricao = ? , data_cadastro = ? , data_vencimento = ? , concluida = ? ,titulo = ? ,lista_id = ? ,usuario_id = ? WHERE tarefa_id= ? ',
-                                            [req.body.descricao,req.body.data_cadastro.substring(0,req.body.data_cadastro.indexOf('T')),req.body.data_vencimento.substring(0,req.body.data_vencimento.indexOf('T')),req.body.concluida?req.body.concluida:0,req.body.titulo,req.params.listaId,req.params.userId,req.body.tarefa_id])
+                                            [req.body.descricao,req.body.data_cadastro?.split('T')[0],req.body.data_vencimento?.split('T')[0],req.body.concluida?req.body.concluida:0,req.body.titulo,req.params.listaId,req.params.userId,req.body.tarefa_id])
                     .catch((err) => {throw err});
                 await atualizaLista(req.params.userId,req.params.listaId);
                 res.json({token:req.headers.authorization})
