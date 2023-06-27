@@ -18,15 +18,18 @@ const updateLista = async(req,res) =>{
     }
 }
 
-const getListas = async(req,res) =>{
+const getListas = async(req,res) => {
     try{
         if(!req.params.userId) res.status(400).send("Não possui usuário")
         else{
-            let listas = await db.promise().query(`SELECT l.lista_id,l.nome,l.data_hora_crt,l.data_hora_mod,uc.nome_usuario AS criador,um.nome_usuario AS modificador FROM lista AS l JOIN usuario AS uc ON uc.usuario_id = l.usuario_id JOIN usuario AS um ON um.usuario_id = l.usuario_id_mod WHERE l.usuario_id=${req.params.userId}`)
+            let listas = await db.promise().query('SELECT u.usuario_id,l.lista_id,l.nome,l.data_hora_crt,l.data_hora_mod FROM usuario AS u JOIN lista AS l on l.usuario_id = u.usuario_id WHERE u.usuario_id = ?', [req.params.userId])
                 .then(result=>{return result[0]})
                 .catch((err) => {throw err});
-            console.log(listas)
-            res.json({resposta:listas,token:req.headers.authorization})
+            let compartilhadas = await db.promise().query('SELECT l.lista_id,l.nome,l.data_hora_crt,l.data_hora_mod,uc.nome AS criador,umod.nome AS ultima_mod FROM Lista AS l JOIN Convidado AS c ON l.lista_id = c.lista_id JOIN Usuario AS uc ON uc.usuario_id = l.usuario_id JOIN Usuario AS umod ON umod.usuario_id = l.usuario_id_mod WHERE c.usuario_id = ?', [req.params.userId])
+                .then(result=>{return result[0]})
+                .catch((err) => {throw err});
+            console.log('listas', listas)
+            res.json({listas:listas, compartilhadas:compartilhadas, token:req.headers.authorization})
         }
     } catch (error) {
         console.log(error);
@@ -34,14 +37,14 @@ const getListas = async(req,res) =>{
     }
 }
 
-const getListasCompartilhadas = async(req,res) =>{
+const getListasCompartilhadas = async(req,res) => {
     try{
         if(!req.params.userId) res.status(400).send("Não possui usuário")
-        else{
-            let listas = await db.promise().query(`SELECT l.lista_id,l.nome,l.data_hora_crt,l.data_hora_mod,uc.nome_usuario AS criador,um.nome_usuario AS modificador FROM lista AS l JOIN usuario AS uc ON uc.usuario_id = l.usuario_id JOIN usuario AS um ON um.usuario_id = l.usuario_id_mod WHERE l.usuario_id=${req.params.userId}`)
+        else {
+            let listas = await db.promise().query(`SELECT l.lista_id,l.nome,l.data_hora_crt,l.data_hora_mod,uc.nome AS nome_criador,umod.nome AS nome_ultima_modificacao FROM Lista AS l JOIN Convidado AS c ON l.lista_id = c.lista_id JOIN Usuario AS uc ON uc.usuario_id = l.usuario_id JOIN Usuario AS umod ON umod.usuario_id = l.usuario_id_mod WHERE c.usuario_id = ${req.params.userId}`)
                 .then(result=>{return result[0]})
                 .catch((err) => {throw err});
-            console.log(listas)
+            console.log('compartilhada',listas)
             res.json({resposta:listas,token:req.headers.authorization})
         }
     } catch (error) {

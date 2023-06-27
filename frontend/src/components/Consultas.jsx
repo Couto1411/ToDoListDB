@@ -204,7 +204,7 @@ export async function DeletaTarefa(props,id){
     })
 }
 
-export async function GetListas(props,setListas) {
+export async function GetListas(props,setListas, setListasCompartilhadas) {
     await Axios.get(baseUrl+'listas/'+sessionStorage.getItem('userId'),{
         headers: {
             'Authorization': sessionStorage.getItem("token")
@@ -212,23 +212,8 @@ export async function GetListas(props,setListas) {
     })
     .then(response => {
         if(response.data.token) sessionStorage.setItem('token',response.data.token)
-        setListas(response.data.resposta)
-    })
-    .catch((error) => {
-        if (error?.response?.status===401) props.navigate('/login')
-        console.log(error)
-    })
-}
-
-export async function GetListasCompartilhadas(props,setListas) {
-    await Axios.get(baseUrl+'listas/'+sessionStorage.getItem('userId'),{
-        headers: {
-            'Authorization': sessionStorage.getItem("token")
-        }
-    })
-    .then(response => {
-        if(response.data.token) sessionStorage.setItem('token',response.data.token)
-        setListas(response.data.resposta)
+        setListas(response.data.listas)
+        setListasCompartilhadas(response.data.compartilhadas)
     })
     .catch((error) => {
         if (error?.response?.status===401) props.navigate('/login')

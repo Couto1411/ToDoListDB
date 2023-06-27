@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import "./listas.css"
 import MenuPage from "../Menu/menupage";
-import { Box, Grid, Button, Typography, List, Container, Tar } from "@mui/material";
+import { Box, Grid, Button, Typography, List, Container } from "@mui/material";
 
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -16,10 +16,8 @@ export default function Listas(props) {
     const [toggle, setToggle] = React.useState(true);
 
     useEffect(() => {
-        GetListas(props,setLista);
-        GetListas(props,setListaCompartilhada);
+        GetListas(props,setLista, setListaCompartilhada);
     },[]);
-
 
     function renderizaMinhasListas() {
         return lista.map((value) => {
@@ -35,34 +33,13 @@ export default function Listas(props) {
             const formattedDatetime = `${hours}:${minutes} em ${day}/${month}/${year}`;
             const labelId = `checkbox-list-label-${value}`;
             return (
-                <ListItem key = {"lista" + value.lista_id}>
-                    <Grid container >
-                    <Grid item xs={12} sm={10} sx={{display:"flex",alignItems:"center"}} >
-                        <ListItemButton role={undefined} onClick={ () => { props.navigate('/tarefas'); sessionStorage.setItem('listaId', value.lista_id) } } dense >
-                            <ListItemText id={labelId} primary={`${value.nome}`} secondary= {"Última modificação às " + formattedDatetime + ", por " + value.modificador}/>
-                        </ListItemButton>
-                    </Grid>
-                    <Grid item xs={12} sm={2} container direction="row" justifyContent="flex-end" alignItems="center">
-                        <Box sx={{mr:1}} className="TEKONORMAL">
-                            CRIADA POR: {value.criador}
-                        </Box>
-                    </Grid>
-                    </Grid>
+                <ListItem key = { "lista" + value.lista_id }>
+                    <ListItemButton role={undefined} onClick={ () => { props.navigate('/tarefas'); sessionStorage.setItem('listaId', value.lista_id) } } dense >
+                        <ListItemText id={labelId} primary={`${value.nome}`} secondary= { "Última modificação às " + formattedDatetime }/>
+                    </ListItemButton>
                 </ListItem>
             );
         })
-    }
-
-    function header() {
-        return <Box align="center" display="flex">
-            <Button variant="text" onClick={() => { {} }} sx={{ flexGrow: 4 }}>
-                <Typography display="inline">Minhas listas</Typography>
-            </Button>
-            <Typography color="primary" display="inline" sx={{ flexGrow: 8 }}>|</Typography>
-            <Button variant="text" onClick={() => { {} }} sx={{ flexGrow: 2 }}>
-                <Typography display="inline">Compartilhadas comigo</Typography>
-            </Button>
-        </Box>
     }
 
     function renderizaListasCompartilhadas() {
@@ -83,12 +60,12 @@ export default function Listas(props) {
                     <Grid container >
                     <Grid item xs={12} sm={10} sx={{display:"flex",alignItems:"center"}} >
                         <ListItemButton role={undefined} onClick={ () => { props.navigate('/tarefas'); sessionStorage.setItem('listaId', value.lista_id) } } dense >
-                            <ListItemText id={labelId} primary={`${value.nome}`} secondary= {"Última modificação às " + formattedDatetime + ", por " + value.modificador}/>
+                            <ListItemText id={ labelId } primary={`${value.nome}`} secondary= {"Última modificação às " + formattedDatetime + ", feita por " + value.ultima_mod}/>
                         </ListItemButton>
                     </Grid>
                     <Grid item xs={12} sm={2} container direction="row" justifyContent="flex-end" alignItems="center">
                         <Box sx={{mr:1}} className="TEKONORMAL">
-                            CRIADA POR: {value.criador}
+                            Proprietário: {value.criador}
                         </Box>
                     </Grid>
                     </Grid>
@@ -97,6 +74,17 @@ export default function Listas(props) {
         })
     }
 
+    function header() {
+        return <Box align="center" display="flex">
+            <Button variant="text" onClick={() => { {setToggle(true)} }} sx={{ flexGrow: 4 }}>
+                <Typography display="inline">Minhas listas</Typography>
+            </Button>
+            <Typography color="primary" display="inline" sx={{ flexGrow: 8 }}>|</Typography>
+            <Button variant="text" onClick={() => { {setToggle(false)} }} sx={{ flexGrow: 2 }}>
+                <Typography display="inline">Compartilhadas comigo</Typography>
+            </Button>
+        </Box>
+    }
 
     function renderTela() {
         return <Container>
