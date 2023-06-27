@@ -72,13 +72,17 @@ Implemente a aplicação especificada acima de forma que ela faça uso do banco 
 Escreva um script SQL com todas as consultas utilizadas na implementação da aplicação.
 </p>
 
-** Execução e Comandos. **
+**Execução e Comandos.**
+<h1>Dependencias</h1>
 
-<h1>Dependencia</h1>
-<p>Versão Node:<a href="https://nodejs.org/en">18.16.0</a></p>
-Deve-se se execultar "Scripts/TODOLISTCREATE.sql";
-Deve alterar os dados de "Backend/chave.js" para incriptação de senhas e "Backend/db.js" dadso de uma coneção do banco de dados que posssui privilagios de "DBManagent".
-Esses comandos devem ser execulatados no front-end e back-end, deve se garantir que as portas estejam livres '8076', '3000' respectivamente.
+ - Node: <a href="https://nodejs.org/en">18.16.0</a>
+ - MySQL: <a href="https://downloads.mysql.com/archives/installer/">8.0.22</a>
+
+<h2>Como Executar</h2>
+
+1. Deve-se se executar "Scripts/TODOLISTCREATE.sql", que irá criar as tabelas do banco de dados;
+2. Deve alterar os dados de "Backend/config.js" para encriptar as senhas (Token_Key) e conectar ao banco de dados (db).
+3. Os seguintes comandos devem ser execulatados no front-end e back-end, deve-se garantir que as portas estejam livres '8081', '3000' respectivamente.
 
 | Comando                |  Função                                                                                           |
 | -----------------------| ------------------------------------------------------------------------------------------------- |

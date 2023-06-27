@@ -1,6 +1,6 @@
 /* LOGICO: */
-DROP IF EXISTS `todolist`;
-CREATE DATABASE IF NOT EXISTS `todolist`;
+DROP DATABASE IF EXISTS `todolist`;
+CREATE DATABASE `todolist`;
 USE `todolist`;
 
 CREATE TABLE Usuario (
