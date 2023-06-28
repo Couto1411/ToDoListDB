@@ -30,7 +30,7 @@ export default function Listas(props) {
     const [open, setOpen] = React.useState(false);
     const [openEdit, setOpenEdit] = React.useState(false);
     const [toggle, setToggle] = React.useState(true);
-    const [pagination, setPagination] = React.useState(0);
+    // const [pagination, setPagination] = React.useState(0);
 
     function truncate( str, n, useWordBoundary ){
         if (str.length <= n) { return str; }
@@ -70,17 +70,24 @@ export default function Listas(props) {
                 return number < 10 ? `0${number}` : number;
             };
             const datetimeMod = new Date(value.data_hora_mod);
-            const hours = addLeadingZero(datetimeMod.getUTCHours());
-            const minutes = addLeadingZero(datetimeMod.getUTCMinutes());
-            const day = addLeadingZero(datetimeMod.getUTCDate());
-            const month = addLeadingZero(datetimeMod.getUTCMonth() + 1); // O mês começa em zero, então é necessário adicionar 1
-            const year = datetimeMod.getUTCFullYear();
+            const hours = addLeadingZero(datetimeMod.getHours());
+            const minutes = addLeadingZero(datetimeMod.getMinutes());
+            const day = addLeadingZero(datetimeMod.getDate());
+            const month = addLeadingZero(datetimeMod.getMonth() + 1); // O mês começa em zero, então é necessário adicionar 1
+            const year = datetimeMod.getFullYear();
             const formattedDatetime = `${hours}:${minutes} em ${day}/${month}/${year}`;
             const labelId = `checkbox-list-label-${value}`;
             return (
                 <ListItem key = { "lista" + value.lista_id }>
                     <ListItemButton role={undefined} onClick={ () => { props.navigate('/tarefas'); sessionStorage.setItem('listaId', value.lista_id) } } dense >
-                        <ListItemText id={labelId} primary={`${value.nome}`} secondary= { "Última modificação às " + formattedDatetime } />
+                        <ListItemText id={labelId} primary={`${value.nome}`} secondary= { "Última modificação às " + formattedDatetime + ", feita por " + value.modificador}
+                            secondaryTypographyProps={{sx:{
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                                display: "-webkit-box",
+                                WebkitLineClamp: "2",
+                                WebkitBoxOrient: "vertical",
+                            }}}/>
                     </ListItemButton>
                     <IconButton onClick={()=>{setOpenEdit(value.lista_id)}} edge="end" aria-label="delete" sx={{ flexGrow: 0 }}>
                         <EditIcon sx={{ color: "white" }} />
@@ -108,7 +115,14 @@ export default function Listas(props) {
                     <Grid container >
                     <Grid item xs={12} sm={9} sx={{display:"flex",alignItems:"center"}} >
                         <ListItemButton role={undefined} onClick={ () => { props.navigate('/tarefas'); sessionStorage.setItem('listaId', value.lista_id) } } dense >
-                            <ListItemText id={ labelId } primary={`${value.nome}`} secondary= {"Última modificação às " + formattedDatetime + ", feita por " + ((value.ultima_mod.length > 20) ? value.ultima_mod.slice(0, 19) + '...' : value.ultima_mod)}/>
+                            <ListItemText id={ labelId } primary={`${value.nome}`} secondary= {"Última modificação às " + formattedDatetime + ", feita por " + value.ultima_mod}
+                                secondaryTypographyProps={{sx:{
+                                    overflow: "hidden",
+                                    textOverflow: "ellipsis",
+                                    display: "-webkit-box",
+                                    WebkitLineClamp: "2",
+                                    WebkitBoxOrient: "vertical",
+                                }}}/>
                         </ListItemButton>
                     </Grid>
                     <Grid item xs={12} sm={3} container direction="row" justifyContent="flex-end" alignItems="center">
