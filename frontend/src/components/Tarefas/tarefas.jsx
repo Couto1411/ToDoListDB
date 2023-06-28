@@ -10,6 +10,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from "@mui/x-date-pickers";
 
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import SearchIcon from '@mui/icons-material/Search';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
@@ -59,7 +60,10 @@ export default function Tarefas(props) {
                         <DeleteIcon />
                     </IconButton>
                 }>
-                <ButtonBase onClick={() => setOpen(tarefa)}><ListItemText className="tarefa">{tarefa.titulo}</ListItemText></ButtonBase>
+                <ButtonBase onClick={() => setOpen(tarefa)}>
+                    <ListItemText className="tarefa" primary={tarefa.titulo} 
+                        primaryTypographyProps={tarefa.concluida?{noWrap:true,sx:{textDecoration: 'line-through'}}:{noWrap:true}}/>
+                </ButtonBase>
                 
             </ListItem></div>
         }
@@ -76,7 +80,7 @@ export default function Tarefas(props) {
                         <DeleteIcon />
                     </IconButton>
                 }>
-                <ListItemText>{usuario.usuario}</ListItemText>
+                <ListItemText primary={usuario.usuario} primaryTypographyProps={{noWrap:true}}/>
             </ListItem></div>
         })
     }
@@ -85,7 +89,7 @@ export default function Tarefas(props) {
         return convidados.map(convidado => {
             return <ListItem key={'convidado' + convidado.id}>
                 <ListItemButton selected={usuAConvidar === convidado.id} onClick={e=>{setUsuAConvidar(convidado.id)}}>
-                    <Typography id={"convidadotext"+convidado.id}>{convidado.nome}</Typography>
+                    <ListItemText id={"convidadotext"+convidado.id} primary={convidado.nome} primaryTypographyProps={{noWrap:true}}/>
                 </ListItemButton>
             </ListItem>
         })
@@ -123,7 +127,11 @@ export default function Tarefas(props) {
 
     const secao = <Container>
             <Box variant="3" display="flex">
-                <Box edge="end" align="center" className="TEKOtarefa" sx={dados.lista?.admin?{ flexGrow: 1, pl:4 }:{ flexGrow: 1,pr:4}}>
+                
+                <IconButton onClick={()=>{sessionStorage.removeItem('listaId');props.navigate('/listas')}} edge="end" >
+                    <ArrowBackIcon fontSize="large"/>
+                </IconButton>
+                <Box edge="end" align="center" className="TEKOtarefa" sx={dados.lista?.admin?{ flexGrow: 1,pl:3}:{ flexGrow: 1,pr:9}}>
                     {dados.lista.nome}
                 </Box>
                 {dados.lista?.admin && <div>
@@ -138,11 +146,11 @@ export default function Tarefas(props) {
             </Box>
 
             <Box align="center" display="flex">
-                <Button variant="text" onClick={() => { setTar(true);setPagination(0) }} sx={{ flexGrow: 1 }}>
+                <Button variant="text" onClick={() => { setTar(true);setPagination(0) }} sx={{ flexGrow: 1,ml:3 }}>
                     <Typography display="inline">Tarefas</Typography>
                 </Button>
-                <Typography color="primary" display="inline" sx={{ flexGrow: 1 }}>|</Typography>
-                <Button variant="text" onClick={() => { setTar(false);setPagination(0) }} sx={{ flexGrow: 1 }}>
+                <Typography color="primary" display={{ xs: 'none', sm: 'inline-block' }} sx={{ flexGrow: 1,pl:5 }}>|</Typography>
+                <Button variant="text" onClick={() => { setTar(false);setPagination(0) }} sx={{ flexGrow: 1,mr:4 }}>
                     <Typography display="inline">Convidados</Typography>
                 </Button>
             </Box>
@@ -234,7 +242,7 @@ export default function Tarefas(props) {
                         <TextField
                             id="nome_nova_tarefa" label="Nome Tarefa" name="nome_nova_tarefa"
                             variant="outlined" required
-                            onChange={e => { limit(e, 100); setNovaTarefa({...NovaTarefa,nome:e.target.value})}}/>
+                            onChange={e => { limit(e, 30); setNovaTarefa({...NovaTarefa,nome:e.target.value})}}/>
                         <Grid container sx={{mt:2}} spacing={1}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <Grid item xs={12} sm={6}><DatePicker format="DD/MM/YYYY" error label="Início Tarefa"

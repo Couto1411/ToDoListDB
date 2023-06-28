@@ -11,8 +11,8 @@ const postTarefa = async(req,res) =>{
         if(!req.body.data_inicio) res.status(400).send("Não possui data início da tarefa")
         else if(!req.body.nome) res.status(400).send("Não possui nome da tarefa")
         else if(!req.body.descricao) res.status(400).send("Não possui descrição da tarefa")
-        else if(!Number(req.params.userId)) res.status(400).send("Não possui id de quem criou")
-        else if(!Number(req.params.listaId)) res.status(400).send("Não possui lista que está associada")
+        else if(!Number(req.params.userId)) res.status(403).send("Não possui id de quem criou")
+        else if(!Number(req.params.listaId)) res.status(403).send("Não possui lista que está associada")
         else{
             let usuarios = await db.promise().query('SELECT c.usuario_id as convidados_id, l.usuario_id FROM convidado c join lista l on c.lista_id=l.lista_id where c.lista_id = ? and c.estado_convite=1',[req.params.listaId])
                 .then(result=>{return result[0]})
@@ -40,8 +40,8 @@ const updateTarefa = async(req,res) =>{
         else if(!req.body.tarefa_id) res.status(400).send("Não possui id da tarefa")
         else if(!req.body.titulo) res.status(400).send("Não possui nome da tarefa")
         else if(!req.body.descricao) res.status(400).send("Não possui descrição da tarefa")
-        else if(!Number(req.params.userId)) res.status(400).send("Não possui id de quem criou")
-        else if(!Number(req.params.listaId)) res.status(400).send("Não possui lista que está associada")
+        else if(!Number(req.params.userId)) res.status(403).send("Não possui id de quem criou")
+        else if(!Number(req.params.listaId)) res.status(403).send("Não possui lista que está associada")
         else{
             let usuarios = await db.promise().query('SELECT c.usuario_id as convidados_id, l.usuario_id FROM convidado c join lista l on c.lista_id=l.lista_id where c.lista_id= ? and c.estado_convite=1',[req.params.listaId])
                 .then(result=>{return result[0]})
@@ -66,8 +66,8 @@ const updateTarefa = async(req,res) =>{
 
 const deletaTarefa = async(req,res) =>{
     try{
-        if(!Number(req.params.userId)) res.status(400).send("Não possui id de quem criou")
-        else if(!Number(req.params.listaId)) res.status(400).send("Não possui lista que está associada")
+        if(!Number(req.params.userId)) res.status(403).send("Não possui id de quem criou")
+        else if(!Number(req.params.listaId)) res.status(403).send("Não possui lista que está associada")
         else if(!Number(req.params.tarefaId)) res.status(400).send("Não possui id da tarefa")
         else{
             let usuarios = await db.promise().query('SELECT c.usuario_id as convidados_id, l.usuario_id FROM convidado c join lista l on c.lista_id=l.lista_id where c.lista_id= ? and c.estado_convite=1',[req.params.listaId])
@@ -92,7 +92,7 @@ const deletaTarefa = async(req,res) =>{
 
 const getTarefas = async(req,res) =>{
     try{
-        if(!Number(req.params.userId) || !Number(req.params.listaId)) res.status(400).send("Não possui id da lista ou do usuário")
+        if(!Number(req.params.userId) || !Number(req.params.listaId)) res.status(403).send("Não possui id da lista ou do usuário")
         else{
             let aux=true
             let resposta ={}
@@ -120,8 +120,8 @@ const getTarefas = async(req,res) =>{
 
 const getUsuarios = async(req,res) =>{
     try{
-        if(!Number(req.params.userId)) res.status(400).send("Não possui id de quem criou")
-        else if(!Number(req.params.listaId)) res.status(400).send("Não possui lista que está associada")
+        if(!Number(req.params.userId)) res.status(403).send("Não possui id de quem criou")
+        else if(!Number(req.params.listaId)) res.status(403).send("Não possui lista que está associada")
         else if(!req.query.nome) res.status(400).send("Não possui nome de usuário")
         else{
             let usuarios = await db.promise().query('SELECT c.usuario_id as convidados_id, l.usuario_id FROM convidado c join lista l on c.lista_id=l.lista_id where c.lista_id= ? and c.estado_convite=1',[req.params.listaId])

@@ -19,6 +19,7 @@ import PersonIcon from '@mui/icons-material/Person';
 
 
 import { useNavigate } from "react-router-dom";
+import { Button } from "@mui/material";
 
 export default function MenuPage({secao: Secao, tamanho}){
     // Faz Menu aparecer
@@ -38,10 +39,14 @@ export default function MenuPage({secao: Secao, tamanho}){
             {/* Navbar */}
             <AppBar position="static">
                 <Toolbar>
-                    <img className="img-fluid" alt="Imagem não encontrada" src={require('./../Imgs/Logo.png')}></img>
-                    <Typography variant="h4" sx={{ mt:0.5,ml:2,flexGrow: 1 }}>
-                        <div className="TEKO" onClick={ ()=> vaiPara('listas') }>To Do List</div>
-                    </Typography>
+                    <Box sx={{flexGrow: 1}}>
+                    <Button onClick={ ()=> vaiPara('listas')} type="text" sx={{px:1,py:0,m:0}}>
+                        <img className="img-fluid" alt="Imagem não encontrada" src={require('./../Imgs/Logo.png')}></img>
+                        <Typography variant="h4" sx={{ mt:0.5,ml:2 }}>
+                            <div className="TEKO">To Do List</div>
+                        </Typography>
+                    </Button>
+                    </Box>
                     <IconButton aria-label="account of current user" aria-controls="menu-appbar" aria-haspopup="true" color="inherit"
                         className="svg_icons"onClick={e=>{setMenuAppearing(e.currentTarget)}}>
                         <AccountCircle />
@@ -78,7 +83,7 @@ export default function MenuPage({secao: Secao, tamanho}){
             </AppBar>
 
             {/* Main */}
-            <Container component="main" maxWidth={"md"&&tamanho} sx={{ mb: 4 }}>
+            <Container component="main" maxWidth={tamanho||"md"} sx={{ mb: 4 }}>
                 <Paper variant="outlined" sx={{ bgcolor: '#282828',my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
                     {Secao}
                 </Paper>
@@ -88,7 +93,7 @@ export default function MenuPage({secao: Secao, tamanho}){
             <Box component="footer" sx={{ py: 3, px: 2, mt: 'auto', color: 'white', bgcolor: '#121212'}}>
                 <Container maxWidth="sm">
                     <Typography variant="body1">
-                        Aplicativo de Lista de Tarefas de Banco de Dados 1.
+                        Interface de lista de tarefas de Banco de Dados I.
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
                         {'Produzido por: '}

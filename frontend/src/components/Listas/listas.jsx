@@ -32,6 +32,14 @@ export default function Listas(props) {
     const [toggle, setToggle] = React.useState(true);
     const [pagination, setPagination] = React.useState(0);
 
+    function truncate( str, n, useWordBoundary ){
+        if (str.length <= n) { return str; }
+        const subString = str.slice(0, n-1); // the original check
+        return (useWordBoundary 
+        ? subString.slice(0, subString.lastIndexOf(" ")) 
+        : subString) + "...";
+    };
+
     useEffect(() => {
         GetListas(props,setLista, setListaCompartilhada);
     },[]);
@@ -72,9 +80,9 @@ export default function Listas(props) {
             return (
                 <ListItem key = { "lista" + value.lista_id }>
                     <ListItemButton role={undefined} onClick={ () => { props.navigate('/tarefas'); sessionStorage.setItem('listaId', value.lista_id) } } dense >
-                        <ListItemText id={labelId} primary={`${value.nome}`} secondary= { "Última modificação às " + formattedDatetime }/>
+                        <ListItemText id={labelId} primary={`${value.nome}`} secondary= { "Última modificação às " + formattedDatetime } />
                     </ListItemButton>
-                    <IconButton onClick={()=>{ { setOpenEdit(value.lista_id) } }} edge="end" aria-label="delete" sx={{ flexGrow: 0 }}>
+                    <IconButton onClick={()=>{setOpenEdit(value.lista_id)}} edge="end" aria-label="delete" sx={{ flexGrow: 0 }}>
                         <EditIcon sx={{ color: "white" }} />
                     </IconButton>
                 </ListItem>
@@ -98,18 +106,20 @@ export default function Listas(props) {
             return (
                 <ListItem key = {"lista" + value.lista_id}>
                     <Grid container >
-                    <Grid item xs={12} sm={10} sx={{display:"flex",alignItems:"center"}} >
+                    <Grid item xs={12} sm={9} sx={{display:"flex",alignItems:"center"}} >
                         <ListItemButton role={undefined} onClick={ () => { props.navigate('/tarefas'); sessionStorage.setItem('listaId', value.lista_id) } } dense >
-                            <ListItemText id={ labelId } primary={`${value.nome}`} secondary= {"Última modificação às " + formattedDatetime + ", feita por " + value.ultima_mod}/>
+                            <ListItemText id={ labelId } primary={`${value.nome}`} secondary= {"Última modificação às " + formattedDatetime + ", feita por " + ((value.ultima_mod.length > 20) ? value.ultima_mod.slice(0, 19) + '...' : value.ultima_mod)}/>
                         </ListItemButton>
-                            <IconButton onClick={ ()=> setOpenEdit(value.lista_id) } edge="end" aria-label="delete" sx={{ flexGrow: 0 }}>
+                    </Grid>
+                    <Grid item xs={12} sm={3} container direction="row" justifyContent="flex-end" alignItems="center">
+                        <Grid item xs={1}>
+                            <IconButton onClick={ ()=> setOpenEdit(value.lista_id) } aria-label="delete">
                                 <EditIcon sx={{ color: "white" }} />
                             </IconButton>
-                    </Grid>
-                    <Grid item xs={12} sm={2} container direction="row" justifyContent="flex-end" alignItems="center">
-                        <Box sx={{mr:1}} className="TEKONORMAL">
-                            Proprietário: {value.criador}
-                        </Box>
+                        </Grid>
+                        <Grid item xs={11}>
+                            <Typography sx={{ml:3}} noWrap fontFamily="Teko" fontSize="1.1em">PROPRIETÁRIO: {value.criador}</Typography>
+                        </Grid>
                     </Grid>
                     </Grid>
                 </ListItem>
@@ -119,18 +129,18 @@ export default function Listas(props) {
 
     function header() {
         return <Box align="center" display="flex">
-            <Button variant="text" onClick={() => { {setToggle(true)} }} sx={{ flexGrow: 4 }}>
+            <Button variant="text" onClick={() => {setToggle(true)}} sx={{ flexGrow: 1,ml:4 }}>
                 <Typography display="inline">Minhas listas</Typography>
             </Button>
-            <Typography color="primary" display="inline" sx={{ flexGrow: 8 }}>|</Typography>
-            <Button variant="text" onClick={() => { {setToggle(false)} }} sx={{ flexGrow: 2 }}>
+            <Typography color="primary" display={{ xs: 'none', sm: 'inline-block' }} sx={{ flexGrow: 1,pl:13 }}>|</Typography>
+            <Button variant="text" onClick={() => {setToggle(false)}} sx={{ flexGrow: 1,mr:5 }}>
                 <Typography display="inline">Compartilhadas comigo</Typography>
             </Button>
         </Box>
     }
 
     function renderTela() {
-        return <Container>
+        return <Box>
             <List>
             {toggle ? renderizaMinhasListas() : renderizaListasCompartilhadas() }
             </List>
@@ -139,14 +149,12 @@ export default function Listas(props) {
                     Nova Lista
                 </Button>
             </Box>}
-        </Container>
+        </Box>
     }
 
     const secao = <section>
-        <Box align="center" className="TEKOTITLE" sx={{ flexGrow: 1 }}>
-            Listas
-            { header() }
-        </Box>
+        <Typography fontSize={"2.3em"} fontFamily={"Teko"} align="center" >LISTAS </Typography>
+        { header() }
         <Box align="center" >
             {renderTela()}
         </Box>
@@ -165,7 +173,7 @@ export default function Listas(props) {
                         <TextField
                             error = {!novaLista}
                             id="nome_nova_list" label="Nome Lista" name="nome_nova_lista"
-                            variant="outlined" required
+                            variant="outlined" required fullWidth
                             onChange={ e => { limit(e, 100); setNovaLista(e.target.value) } }/>
                         <Grid container sx={{mt:2}} spacing={1}>
                         </Grid>
@@ -184,7 +192,7 @@ export default function Listas(props) {
                         <TextField
                             error = {!editLista}
                             id="nome_edit_list" label="Nome Lista" name="nome_edit_lista"
-                            variant="outlined" required
+                            variant="outlined" required fullWidth
                             onChange={ e => { limit(e, 100); setEditLista(e.target.value) } }/>
                         <Grid container sx={{mt:2}} spacing={1}>
                         </Grid>

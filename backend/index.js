@@ -1,6 +1,6 @@
 const express = require("express"); //import express
 const cors = require('cors');
-const {validaToken,criaToken, encryptPassword} = require('./auth')
+const {validaToken} = require('./auth')
 const { getConvites, postConvite, aceitaConvite, rejeitaConvite, deleteConvite } = require("./api/notificacao");
 const { getUsuarios, getTarefas, postTarefa, updateTarefa, deletaTarefa } = require("./api/tarefa");
 const { deleteLista, getListas, postLista, updateLista } = require("./api/lista");

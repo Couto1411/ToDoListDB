@@ -1,7 +1,7 @@
 import React, {  useEffect, useState } from "react";
 import "./notificacoes.css"
 import MenuPage from "../Menu/menupage";
-import { Box, Button, Grid, IconButton, Paper, Typography } from "@mui/material";
+import { Box, Grid, IconButton, Paper, Typography } from "@mui/material";
 
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import CheckIcon from '@mui/icons-material/Check';
@@ -34,8 +34,14 @@ export default function Notificacoes(props){
                 <Grid container>
                     <Grid item xs={12} sm={10} sx={{display:"flex",alignItems:"center"}}>
                         <AccountCircleIcon fontSize="large" sx={{mr:1}}/>
-                        <Typography fontSize="1.1em">
-                        "{element.nome_usuario}" te convidou para "{element.nome_lista}"
+                        <Typography sx={{
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            display: "-webkit-box",
+                            WebkitLineClamp: "2",
+                            WebkitBoxOrient: "vertical",
+                        }}>
+                            "{element.nome_usuario}" te convidou para "{element.nome_lista}"
                         </Typography>
                     </Grid>
                     {element.estado_convite?

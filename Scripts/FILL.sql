@@ -27,6 +27,3 @@ INSERT INTO `todolist`.`convidado`
 (`usuario_id`,`lista_id`,`estado_convite`)
 VALUES
 (2,1,0);
-
-select * from usuario;
-

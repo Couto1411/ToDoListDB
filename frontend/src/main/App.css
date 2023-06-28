@@ -3,6 +3,26 @@ html {
 }
 
 .TEKO{
+    color: white;
     font-family: 'Montserrat', sans-serif;
     font-family: 'Teko', sans-serif;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #ffffff00; 
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #081320; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555; 
 }

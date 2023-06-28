@@ -58,22 +58,6 @@ const getListas = async(req,res) => {
     }
 }
 
-const getListasCompartilhadas = async(req,res) => {
-    try{
-        if(!req.params.userId) res.status(400).send("Não possui usuário")
-        else {
-            let listas = await db.promise().query('SELECT l.lista_id,l.nome,l.data_hora_crt,l.data_hora_mod,uc.nome AS nome_criador,umod.nome AS nome_ultima_modificacao FROM Lista AS l JOIN Convidado AS c ON l.lista_id = c.lista_id JOIN Usuario AS uc ON uc.usuario_id = l.usuario_id JOIN Usuario AS umod ON umod.usuario_id = l.usuario_id_mod WHERE c.usuario_id = ?', [req.params.userId])
-                .then(result=>{return result[0]})
-                .catch((err) => {throw err});
-            console.log(listas)
-            res.json({resposta:listas,token:req.headers.authorization})
-        }
-    } catch (error) {
-        console.log(error);
-        return res.status(500).json({ message: error });
-    }
-}
-
 const deleteLista = async(req,res) =>{
     try{
         if(!Number(req.params.userId)) res.status(400).send("Não possui id de quem criou")
@@ -99,5 +83,5 @@ const deleteLista = async(req,res) =>{
 }
 
 module.exports = {
-    getListas, getListasCompartilhadas, updateLista, postLista, deleteLista
+    getListas, updateLista, postLista, deleteLista
 }
