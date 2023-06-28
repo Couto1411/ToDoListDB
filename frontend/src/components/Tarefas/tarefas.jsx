@@ -48,7 +48,7 @@ export default function Tarefas(props) {
 
     useEffect(() => {
         GetTarefas(props,setDados);
-    },[]);
+    },[props]);
 
     function renderTarefas() {
         let count=0;

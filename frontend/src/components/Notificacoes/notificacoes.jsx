@@ -14,7 +14,7 @@ export default function Notificacoes(props){
 
     useEffect(() => {
         GetConvites(props,setConvites);
-    },[]);
+    },[props]);
 
     function handleAceita(id){
         if(AceitaConvite(props,id)){
