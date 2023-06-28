@@ -30,7 +30,7 @@ export default function Listas(props) {
     const [open, setOpen] = React.useState(false);
     const [openEdit, setOpenEdit] = React.useState(false);
     const [toggle, setToggle] = React.useState(true);
-    const [pagination, setPagination] = React.useState(0);
+    // const [pagination, setPagination] = React.useState(0);
 
     useEffect(() => {
         GetListas(props,setLista, setListaCompartilhada);
@@ -62,17 +62,17 @@ export default function Listas(props) {
                 return number < 10 ? `0${number}` : number;
             };
             const datetimeMod = new Date(value.data_hora_mod);
-            const hours = addLeadingZero(datetimeMod.getUTCHours());
-            const minutes = addLeadingZero(datetimeMod.getUTCMinutes());
-            const day = addLeadingZero(datetimeMod.getUTCDate());
-            const month = addLeadingZero(datetimeMod.getUTCMonth() + 1); // O mês começa em zero, então é necessário adicionar 1
-            const year = datetimeMod.getUTCFullYear();
+            const hours = addLeadingZero(datetimeMod.getHours());
+            const minutes = addLeadingZero(datetimeMod.getMinutes());
+            const day = addLeadingZero(datetimeMod.getDate());
+            const month = addLeadingZero(datetimeMod.getMonth() + 1); // O mês começa em zero, então é necessário adicionar 1
+            const year = datetimeMod.getFullYear();
             const formattedDatetime = `${hours}:${minutes} em ${day}/${month}/${year}`;
             const labelId = `checkbox-list-label-${value}`;
             return (
                 <ListItem key = { "lista" + value.lista_id }>
                     <ListItemButton role={undefined} onClick={ () => { props.navigate('/tarefas'); sessionStorage.setItem('listaId', value.lista_id) } } dense >
-                        <ListItemText id={labelId} primary={`${value.nome}`} secondary= { "Última modificação às " + formattedDatetime }/>
+                        <ListItemText id={labelId} primary={`${value.nome}`} secondary= { "Última modificação às " + formattedDatetime + ", feita por " + value.modificador}/>
                     </ListItemButton>
                     <IconButton onClick={()=>{ { setOpenEdit(value.lista_id) } }} edge="end" aria-label="delete" sx={{ flexGrow: 0 }}>
                         <EditIcon sx={{ color: "white" }} />
