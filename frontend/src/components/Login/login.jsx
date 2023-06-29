@@ -71,6 +71,7 @@ export default function LoginComponent(props) {
     };
 
     return (
+        <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', }}>
         <Container component="main" maxWidth="xs" sx={{display:'flex',justifyContent:'center'}}>
             <Box
                 sx={{
@@ -219,5 +220,21 @@ export default function LoginComponent(props) {
                 </Fade>
             </Modal>
         </Container>
+        
+        <Box component="footer" sx={{ py: 3, px: 2, mt: 'auto', color: 'white', bgcolor: '#121212'}}>
+            <Container maxWidth="sm">
+                <Typography variant="body1">
+                    Interface de lista de tarefas de Banco de Dados I.
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                    {'Produzido por: '}
+                    <Link target="_blank" color="inherit" href="https://github.com/Couto1411"> Gabriel Couto</Link>{', '}
+                    <Link target="_blank" color="inherit" href="https://github.com/LucasG4K"> Lucas de Souza</Link>{', '}
+                    <Link target="_blank" color="inherit" href="https://github.com/mkssantos"> Marcus Vinícius</Link>{', '}
+                    <Link target="_blank" color="inherit" href="https://github.com/pablossousa"> Pablo Silva</Link>{', 2023.'}
+                </Typography>
+            </Container>
+        </Box>
+        </Box>
     );
 }
