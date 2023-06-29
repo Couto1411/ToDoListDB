@@ -56,6 +56,8 @@ A partir do DER obtido na Tarefa 01, utilize as regras de mapeamento DER/Relacio
 
 <p align="justify">
 A partir do modelo lógico relacional obtido na Tarefa 02, escreva um script SQL para construção do esquema do banco de dados. Considere que será utilizado o SGBD MySQL para implantação da aplicação.
+
+Localizado em: Scripts/TODOLISTCREATE.sql
 </p>
 
 <p align="justify">
@@ -70,10 +72,12 @@ Implemente a aplicação especificada acima de forma que ela faça uso do banco 
 **Tarefa 05.**
 
 Escreva um script SQL com todas as consultas utilizadas na implementação da aplicação.
+
+Localizado em: Scripts/CONSULTAS.sql
 </p>
 
-**Execução e Comandos.**
-<h1>Dependencias</h1>
+# Execução e Comandos.
+<h2>Dependencias</h2>
 
  - Node: <a href="https://nodejs.org/en">18.16.0</a>
  - MySQL: <a href="https://downloads.mysql.com/archives/installer/">8.0.22</a>
