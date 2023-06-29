@@ -1,13 +1,12 @@
 const mysql = require('mysql2')
 
 const db = mysql.createConnection({
-    host: "localhost",
-    user: "TrabalhoBD",
-    password: "maravilha2023",
-    database:"todolist" 
-    
+    host: "seu-host-aqui",
+    user: "seu-user-aqui",
+    password: "sua-senha-aqui",
+    database:"todolist"
 })
 
 module.exports = {
-    Token_Key:"Sua-chave-aqui", db:db
+    Token_Key:"sua-chave-aqui", db:db
 }

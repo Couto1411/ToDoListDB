@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import "./listas.css"
 import MenuPage from "../Menu/menupage";
-import { Box, Grid, Button, Typography, List, Container, IconButton, Modal, Fade, TextField } from "@mui/material";
+import { Box, Grid, Button, Typography, List, Divider, IconButton, Modal, Fade, TextField, Pagination } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
 
 import ListItem from '@mui/material/ListItem';
@@ -30,19 +30,11 @@ export default function Listas(props) {
     const [open, setOpen] = React.useState(false);
     const [openEdit, setOpenEdit] = React.useState(false);
     const [toggle, setToggle] = React.useState(true);
-    // const [pagination, setPagination] = React.useState(0);
-
-    function truncate( str, n, useWordBoundary ){
-        if (str.length <= n) { return str; }
-        const subString = str.slice(0, n-1); // the original check
-        return (useWordBoundary 
-        ? subString.slice(0, subString.lastIndexOf(" ")) 
-        : subString) + "...";
-    };
+    const [pagination, setPagination] = React.useState(0);
 
     useEffect(() => {
         GetListas(props,setLista, setListaCompartilhada);
-    },[]);
+    },[props]);
 
     function handleNewLista() {
         if (novaLista !== null && novaLista !== '' && novaLista !== true) {
@@ -65,7 +57,9 @@ export default function Listas(props) {
     }
  
     function renderizaMinhasListas() {
-        return lista.map((value) => {
+        let count=0;
+        return lista.slice(pagination*10, (pagination*10) + 10).map((value) => {
+            count++;
             const addLeadingZero = (number) => {
                 return number < 10 ? `0${number}` : number;
             };
@@ -78,7 +72,7 @@ export default function Listas(props) {
             const formattedDatetime = `${hours}:${minutes} em ${day}/${month}/${year}`;
             const labelId = `checkbox-list-label-${value}`;
             return (
-                <ListItem key = { "lista" + value.lista_id }>
+                <ListItem key = { "lista" + value.lista_id }> {count>1?<Divider component="li" />:<></>}
                     <ListItemButton role={undefined} onClick={ () => { props.navigate('/tarefas'); sessionStorage.setItem('listaId', value.lista_id) } } dense >
                         <ListItemText id={labelId} primary={`${value.nome}`} secondary= { "Última modificação às " + formattedDatetime + ", feita por " + value.modificador}
                             secondaryTypographyProps={{sx:{
@@ -98,7 +92,9 @@ export default function Listas(props) {
     }
 
     function renderizaListasCompartilhadas() {
-        return listaCompartilhada.map((value) => {
+        let count=0;
+        return listaCompartilhada.slice(pagination*10, (pagination*10)+10).map((value) => {
+            count++;
             const addLeadingZero = (number) => {
                 return number < 10 ? `0${number}` : number;
             };
@@ -111,7 +107,7 @@ export default function Listas(props) {
             const formattedDatetime = `${hours}:${minutes} em ${day}/${month}/${year}`;
             const labelId = `checkbox-list-label-${value}`;
             return (
-                <ListItem key = {"lista" + value.lista_id}>
+                <ListItem key = {"lista" + value.lista_id}>{count>1?<Divider component="li" />:<></>}
                     <Grid container >
                     <Grid item xs={12} sm={9} sx={{display:"flex",alignItems:"center"}} >
                         <ListItemButton role={undefined} onClick={ () => { props.navigate('/tarefas'); sessionStorage.setItem('listaId', value.lista_id) } } dense >
@@ -143,11 +139,11 @@ export default function Listas(props) {
 
     function header() {
         return <Box align="center" display="flex">
-            <Button variant="text" onClick={() => {setToggle(true)}} sx={{ flexGrow: 1,ml:4 }}>
+            <Button variant="text" onClick={() => {setToggle(true); setPagination(0)}} sx={{ flexGrow: 1,ml:4 }}>
                 <Typography display="inline">Minhas listas</Typography>
             </Button>
             <Typography color="primary" display={{ xs: 'none', sm: 'inline-block' }} sx={{ flexGrow: 1,pl:13 }}>|</Typography>
-            <Button variant="text" onClick={() => {setToggle(false)}} sx={{ flexGrow: 1,mr:5 }}>
+            <Button variant="text" onClick={() => {setToggle(false); setPagination(0)}} sx={{ flexGrow: 1,mr:5 }}>
                 <Typography display="inline">Compartilhadas comigo</Typography>
             </Button>
         </Box>
@@ -163,6 +159,14 @@ export default function Listas(props) {
                     Nova Lista
                 </Button>
             </Box>}
+            { toggle ?
+                <Pagination 
+                    hideNextButton hidePrevButton page={pagination+1} count={Math.ceil(lista.length/10)} 
+                    onChange={e=>{setPagination(e.target.textContent-1)}} className="pagination" />:
+                <Pagination 
+                    hideNextButton hidePrevButton page={pagination+1} count={Math.ceil(listaCompartilhada.length/10)} 
+                    onChange={e=>{setPagination(e.target.textContent-1)}}  className="pagination" />
+            }
         </Box>
     }
 

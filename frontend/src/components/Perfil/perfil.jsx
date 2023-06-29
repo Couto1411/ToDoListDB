@@ -16,7 +16,7 @@ export default function Perfil(props) {
 
     useEffect(()=>{
         GetInfoUser(props,setUser)
-    },[])
+    },[props])
 
     function handleSave(){
         if((user?.senha && user.senha===user.confsenha) || !user.senha){
